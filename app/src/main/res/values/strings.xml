@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Ace Workout</string>
+    <string name="menu_button">menu_button</string>
+    <string name="ace_workout">ACE Workout</string>
+    <string name="_1">1</string>
+    <string name="report_image_button">report image button</string>
+    <string name="summary_button">summary button</string>
+    <string name="training_button">training button</string>
+    <string name="setting_button">setting button</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="_7">7</string>
+    <string name="total_days_trained">Total Days Trained</string>
+    <string name="Total_days_trained_number">0</string>
+</resources>
