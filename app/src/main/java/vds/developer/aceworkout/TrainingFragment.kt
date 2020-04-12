@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.training_item.*
 import vds.developer.aceworkout.models.TrainingViewModel
 
 ///**
@@ -27,6 +26,8 @@ import vds.developer.aceworkout.models.TrainingViewModel
  * fragment (e.g. upon screen orientation changes).
  */
 class TrainingFragment : Fragment() {
+
+
 
     private lateinit var trainingModel: TrainingViewModel
     val context by lazy { this }
@@ -50,9 +51,11 @@ class TrainingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         this.training_fragment = getView()!!.findViewById(R.id.training_fragment)
 //        var training_set_recycleView = this.training_fragment.findViewById<RecyclerView>(R.id.training_set_recycleView)
-
+//        training_fragment.adapter = TrainingViewAdapter(trainingModel, fragmentManager!!, context.requireContext())
         trainingModel.trainingList.observe(this, androidx.lifecycle.Observer {
-            training_fragment.adapter = TrainingViewAdapter(trainingModel)
+            training_fragment.adapter = TrainingViewAdapter(trainingModel, fragmentManager!!, context.requireContext())
         })
     }
+
+
 }

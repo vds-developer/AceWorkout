@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="24dp"
-  >
+    android:background="@color/darkBackgroundColor">
 
 
     <TextView
@@ -16,11 +16,11 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="TextView"
-        android:textSize="32dp"
+        android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/training_name" />
 
     <View
         android:id="@+id/divider"
@@ -33,82 +33,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/training_set_recycleView"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="500dp"-->
-<!--        android:layout_marginBottom="80dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/divider"-->
-<!--        app:layout_constraintVertical_bias="0.0"-->
-<!--        tools:listItem="@layout/single_set"-->
-<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--        />-->
-    <LinearLayout
-        android:id="@+id/training_set_linear"
-        android:layout_width="0dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trainingSetRecyclerView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
         android:orientation="vertical"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/single_set"
+        >
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/training_set_linear" />
+        <!--        <include layout="@layout/add_set_template" />-->
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button2"
+        android:id="@+id/add_set_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
+        android:enabled="true"
         android:gravity="center"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_easy"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/training_set_linear" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_easy"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:gravity="center"
-        android:text="Button"
+        android:text="@string/add_set"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/training_set_linear" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trainingSetRecyclerView" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button5"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:gravity="center"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/training_set_linear" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
