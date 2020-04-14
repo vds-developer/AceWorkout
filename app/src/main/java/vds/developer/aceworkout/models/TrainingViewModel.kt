@@ -2,30 +2,32 @@ package vds.developer.aceworkout.models
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import vds.developer.aceworkout.SingleExerciseStatModel
 import vds.developer.aceworkout.TrainingRepository
+import java.util.*
 
 class TrainingViewModel() : ViewModel() {
-    val trainingList = MutableLiveData<MutableList<TrainingModel>>()
+    val trainingList = MutableLiveData<MutableList<TrainingDayModel>>()
 
     init {
         trainingList.value = TrainingRepository.getTrainingData()!!
     }
 
-    fun addSet(index : Int, set : SingleExerciseStatModel) {
-        trainingList.value!![index].stats.add(set)
+    fun getTrainingDay(index : Int): TrainingDayModel {
+        return trainingList.value!![index]
     }
 
-    fun deleteSet(index: Int, set : SingleExerciseStatModel) {
-        trainingList.value!![index].stats.removeAt(0)
+    fun getTrainingModel(index : Int) : SetModel? {
+//        return trainingList.value?.get(index)
+        return null
     }
 
-    fun getTrainingModel(index : Int) : TrainingModel? {
-        return trainingList.value?.get(index)
+    fun getTotalDays() : Int {
+        return trainingList.value!!.size
+//        return if(getTrainingModel(index) == null || getTrainingModel(index)?.set == null) 0 else getTrainingModel(index)!!.set.size
     }
 
-    fun getSizeForTrainingModel(index : Int) : Int {
-        return if(getTrainingModel(index) == null || getTrainingModel(index)?.stats == null) 0 else getTrainingModel(index)!!.stats.size
+    fun getDate(index : Int) : Date{
+        return trainingList.value!![index].date
     }
 
 }

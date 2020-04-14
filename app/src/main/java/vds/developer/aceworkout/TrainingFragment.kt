@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import kotlinx.android.synthetic.main.training_view_pager.*
 import vds.developer.aceworkout.models.TrainingViewModel
+
 
 ///**
 // * A fragment representing a list of Items.
@@ -29,9 +32,9 @@ class TrainingFragment : Fragment() {
 
 
 
-    private lateinit var trainingModel: TrainingViewModel
+    private lateinit var trainingViewModel: TrainingViewModel
     val context by lazy { this }
-    lateinit var training_fragment : RecyclerView
+    lateinit var trainingViewPager : ViewPager2
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,21 +43,30 @@ class TrainingFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.training_fragment, container, false)
-        trainingModel = ViewModelProvider(this).get(TrainingViewModel::class.java)
-
-
+        val view = inflater.inflate(R.layout.training_view_pager, container, false)
+        trainingViewModel = ViewModelProvider(this).get(TrainingViewModel::class.java)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.training_fragment = getView()!!.findViewById(R.id.training_fragment)
-//        var training_set_recycleView = this.training_fragment.findViewById<RecyclerView>(R.id.training_set_recycleView)
-//        training_fragment.adapter = TrainingViewAdapter(trainingModel, fragmentManager!!, context.requireContext())
-        trainingModel.trainingList.observe(this, androidx.lifecycle.Observer {
-            training_fragment.adapter = TrainingViewAdapter(trainingModel, fragmentManager!!, context.requireContext())
+        this.trainingViewPager = view.findViewById(R.id.trainingViewPager)
+        trainingViewPager.registerOnPageChangeCallback(pageChangeCallback)
+//        var training_set_recycleView = this.training_day_page.findViewById<RecyclerView>(R.id.training_set_recycleView)
+//        training_day_page.adapter = TrainingViewAdapter(trainingModel, fragmentManager!!, context.requireContext())
+        trainingViewModel.trainingList.observe(this, androidx.lifecycle.Observer {
+            trainingViewPager.adapter = TrainingPageViewPagerAdapter(trainingViewModel, fragmentManager!!)
         })
+    }
+
+    /*
+     * ViewPager page change listener
+     */
+    var pageChangeCallback: OnPageChangeCallback = object : OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            dateText.text = trainingViewModel.getDate(position).toString() + "$position";
+        }
     }
 
 

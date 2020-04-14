@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.add_set_template.*
-import vds.developer.aceworkout.models.TrainingViewModel
+import vds.developer.aceworkout.models.SetModel
+import vds.developer.aceworkout.models.SingleRep
 
-class AddSetDialog(private var trainingViewModel: TrainingViewModel, private var position: Int, private var exerciseItemAdapter: ExerciseItemAdapter) : DialogFragment() {
+class AddSetDialog(internal var setsModel: SetModel, private var exerciseItemAdapter: ExerciseItemAdapter) : DialogFragment() {
 
     interface AddSetDialogListener {
         fun onFinishAddSetDialog(inputText: String?)
@@ -26,7 +26,6 @@ class AddSetDialog(private var trainingViewModel: TrainingViewModel, private var
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        return super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.add_set_template, container, false)
     }
 
@@ -56,9 +55,8 @@ class AddSetDialog(private var trainingViewModel: TrainingViewModel, private var
             // save to database and get data
             weight = if (weightInputTxt.text.isNullOrBlank()) 0.0 else weightInputTxt.text.toString().toDouble()
             reps = if (repsInputTxt.text.isNullOrBlank()) 0 else repsInputTxt.text.toString().toInt()
-            trainingViewModel.addSet(position, SingleExerciseStatModel(weight!!, reps!!))
-//            exerciseItemAdapter.notifyDataSetChanged()
-                exerciseItemAdapter.notifyItemInserted(trainingViewModel.getSizeForTrainingModel(position))
+            setsModel.addSet(SingleRep(weight!!, reps!!))
+                exerciseItemAdapter.notifyItemInserted(setsModel.getSize())
             dismiss()
         }
     }
