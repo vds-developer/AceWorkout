@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        switchFragments(main_fragment);
+//        switchFragments();
         topAppBar.setNavigationOnClickListener {
             // Handle navigation icon press
             drawer.openDrawer(GravityCompat.START)
@@ -29,10 +29,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private fun switchFragments(fragment: Fragment) {
+    private fun switchFragments() {
         if (fragmentManager == null) fragmentManager = supportFragmentManager
         fragmentManager!!.beginTransaction()
-                .replace(R.id.main_fragment, fragment)
+                .replace(R.id.main_fragment, TrainingFragment())
                 .addToBackStack(null)
                 .commit()
 

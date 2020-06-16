@@ -9,14 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import vds.developer.aceworkout.R
-import vds.developer.aceworkout.models.TrainingViewModel
+import vds.developer.aceworkout.models.TrainingFragmentViewModel
 import java.util.*
 
 
 class TrainingRecycleView
 //    private final OnListFragmentInteractionListener mListener;
 
-(private val listItemLayout: Int, private val exerciseItems: ArrayList<TrainingViewModel>) : RecyclerView.Adapter<TrainingRecycleView.ViewHolder>() {
+(private val listItemLayout: Int, private val exerciseItems: ArrayList<TrainingFragmentViewModel>) : RecyclerView.Adapter<TrainingRecycleView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -37,7 +37,7 @@ class TrainingRecycleView
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var item: TrainingViewModel? = null
+        var item: TrainingFragmentViewModel? = null
         private val textView: TextView
 
         init {

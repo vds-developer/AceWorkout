@@ -20,7 +20,6 @@
     <string name="training">Training</string>
     <string name="report">Report</string>
     <string name="training_name">Training Name</string>
-    <string name="add_set">Add Set</string>
     <string name="weight">Weight</string>
     <string name="reps">Reps</string>
     <string name="set">Set</string>
@@ -33,4 +32,11 @@
     <string name="delete">Delete</string>
     <string name="next">Next</string>
     <string name="prev">Prev</string>
+    <string name="delete_button">Delete Button</string>
+    <string name="edit_button">Edit Button</string>
+    <string name="weight_lbs">Weight (lbs)</string>
+    <string name="actions">Actions</string>
+    <string name="number_symbol">#</string>
+    <string name="no_data_available">No Data Available</string>
+    <string name="add_set">Add Set</string>
 </resources>

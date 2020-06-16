@@ -4,15 +4,18 @@ package vds.developer.aceworkout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import vds.developer.aceworkout.models.SingleRep
+import vds.developer.aceworkout.data.entities.Rep
+import vds.developer.aceworkout.data.entities.Set
+import vds.developer.aceworkout.models.TrainingFragmentViewModel
 
 
-class ExerciseItemAdapter(singleRepItemModelList : List<SingleRep>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var singleRepItemModelList : List<SingleRep> = singleRepItemModelList
+class RepsRecycleView(val reps : List<Rep>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+//    private var reps = trainingDaySetsReps.reps
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rootView = LayoutInflater.from(parent.context)
@@ -21,15 +24,17 @@ class ExerciseItemAdapter(singleRepItemModelList : List<SingleRep>) : RecyclerVi
     }
 
     override fun getItemCount(): Int {
-        return this.singleRepItemModelList.size
+        return this.reps.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val exerciseStatModel = singleRepItemModelList[position]
+        val rep = reps[position]
         val viewHolder : RecycleExerciseItemViewHolder = holder as RecycleExerciseItemViewHolder
-        viewHolder.repsText.text = exerciseStatModel.reps.toString()
-        viewHolder.weightText.text = exerciseStatModel.weight.toString()
+        viewHolder.repsText.text = rep.reps.toString()
+        viewHolder.weightText.text = rep.weight.toString()
         viewHolder.itemView.setOnClickListener { showMenu(viewHolder.itemView) }
+        viewHolder.editButton.setOnClickListener { repItemListener.onEditRepButtonClick(rep) }
+        viewHolder.deleteButton.setOnClickListener { repItemListener.onDeleteRepButtonClick(rep) }
     }
 
     private fun showMenu(view: View?) {
@@ -38,8 +43,15 @@ class ExerciseItemAdapter(singleRepItemModelList : List<SingleRep>) : RecyclerVi
         popup.show()
     }
 
+    interface RepItemListener {
+        fun onEditRepButtonClick(rep : Rep)
+        fun onDeleteRepButtonClick(rep : Rep)
+    }
+
     class RecycleExerciseItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var weightText : TextView = itemView.findViewById(R.id.weight)
         var repsText : TextView = itemView.findViewById(R.id.reps)
+        var editButton : ImageButton = itemView.findViewById(R.id.editButton)
+        var deleteButton : ImageButton = itemView.findViewById(R.id.deleteButton)
     }
 }

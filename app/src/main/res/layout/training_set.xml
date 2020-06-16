@@ -4,52 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="24dp"
-    android:background="@color/darkBackgroundColor">
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginRight="16dp"
+    android:background="@color/darkBackgroundColor"
+    android:paddingLeft="8dp"
+    android:paddingTop="8dp"
+    android:paddingRight="8dp">
 
 
     <TextView
         android:id="@+id/training_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintBottom_toTopOf="@+id/repsHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:text="@string/training_name" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/headerDivider"
         android:layout_width="0dp"
         android:layout_height="8dp"
-        android:layout_marginTop="76dp"
         android:background="@color/blue"
+        app:layout_constraintBottom_toTopOf="@+id/trainingSetRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/repsHeader" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trainingSetRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="56dp"
         android:orientation="vertical"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/single_rep"
+        app:layout_constraintTop_toBottomOf="@+id/headerDivider"
         tools:itemCount="5"
-        >
+        tools:listitem="@layout/single_rep">
 
         <!--        <include layout="@layout/add_set_template" />-->
     </androidx.recyclerview.widget.RecyclerView>
@@ -67,7 +67,70 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trainingSetRecyclerView" />
 
+    <TextView
+        android:id="@+id/weightHeader"
+        android:layout_width="82dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:gravity="center"
+        android:text="@string/weight_lbs"
+        app:layout_constraintBottom_toBottomOf="@+id/numberHeader"
+        app:layout_constraintStart_toEndOf="@+id/numberHeader" />
 
+    <TextView
+        android:id="@+id/numberHeader"
+        android:layout_width="27dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/number_symbol"
+        app:layout_constraintBottom_toTopOf="@+id/headerDivider"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/repsHeader"
+        android:layout_width="64dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center"
+        android:text="@string/reps"
+        app:layout_constraintBottom_toBottomOf="@+id/weightHeader"
+        app:layout_constraintEnd_toStartOf="@+id/action_divider"
+        app:layout_constraintHorizontal_bias="0.684"
+        app:layout_constraintStart_toEndOf="@+id/weightHeader" />
+
+    <View
+        android:id="@+id/action_divider"
+        android:layout_width="1dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/colorAccent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/headerDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.629"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/training_name"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/actionHeader"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/actions"
+        app:layout_constraintBottom_toTopOf="@+id/headerDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/action_divider" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

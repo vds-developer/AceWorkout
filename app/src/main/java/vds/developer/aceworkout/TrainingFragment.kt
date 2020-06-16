@@ -1,15 +1,20 @@
 package vds.developer.aceworkout
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import kotlinx.android.synthetic.main.training_view_pager.*
-import vds.developer.aceworkout.models.TrainingViewModel
+import vds.developer.aceworkout.data.entities.Rep
+import vds.developer.aceworkout.data.entities.Set
+import vds.developer.aceworkout.models.TrainingFragmentViewModel
+import vds.developer.aceworkout.models.TrainingFragmentViewModelFactory
 
 
 ///**
@@ -28,35 +33,56 @@ import vds.developer.aceworkout.models.TrainingViewModel
  * Mandatory empty constructor for the fragment manager to instantiate the
  * fragment (e.g. upon screen orientation changes).
  */
-class TrainingFragment : Fragment() {
+@RequiresApi(Build.VERSION_CODES.O)
+class TrainingFragment : Fragment(),
+        TrainingDayRecycleView.TrainingSetItemListener,
+        RepsRecycleView.RepItemListener {
 
-
-
-    private lateinit var trainingViewModel: TrainingViewModel
+    lateinit var trainingFragmentViewModel: TrainingFragmentViewModel
     val context by lazy { this }
     lateinit var trainingViewPager : ViewPager2
+//    private currentPage=0;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.training_view_pager, container, false)
-        trainingViewModel = ViewModelProvider(this).get(TrainingViewModel::class.java)
+
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         this.trainingViewPager = view.findViewById(R.id.trainingViewPager)
         trainingViewPager.registerOnPageChangeCallback(pageChangeCallback)
+        trainingFragmentViewModel = ViewModelProvider(this, TrainingFragmentViewModelFactory(application = activity!!.application))
+                .get(TrainingFragmentViewModel::class.java)
+
+        swipeLayout.setOnRefreshListener {
+            trainingFragmentViewModel.refresh()
+        }
+
+
+        trainingFragmentViewModel.trainingDayRepsSets.let { data ->
+            data.observe(
+                    this, androidx.lifecycle.Observer {
+                trainingViewPager.adapter = TrainingPageViewPagerAdapter(this.requireContext(), it, this, this)
+                swipeLayout.isRefreshing = false
+            })
+        }
 //        var training_set_recycleView = this.training_day_page.findViewById<RecyclerView>(R.id.training_set_recycleView)
 //        training_day_page.adapter = TrainingViewAdapter(trainingModel, fragmentManager!!, context.requireContext())
-        trainingViewModel.trainingList.observe(this, androidx.lifecycle.Observer {
-            trainingViewPager.adapter = TrainingPageViewPagerAdapter(trainingViewModel, fragmentManager!!)
-        })
+
+
+
     }
 
     /*
@@ -65,8 +91,30 @@ class TrainingFragment : Fragment() {
     var pageChangeCallback: OnPageChangeCallback = object : OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
-            dateText.text = trainingViewModel.getDate(position).toString() + "$position";
+            dateText.text = trainingFragmentViewModel.date.toString()
         }
+    }
+
+    override fun onAddTrainingSetButtonClick(set: Set) {
+        //todo
+        showAddRep(set)
+//        trainingFragmentViewModel.refresh()
+
+    }
+
+    private fun showAddRep(set:Set) {
+        val addSetDialog = RepDialog(set, trainingFragmentViewModel)
+        fragmentManager?.let { addSetDialog.show(it, null) }
+
+    }
+
+    override fun onEditRepButtonClick(rep : Rep) {
+        val addSetDialog = RepDialog(rep, trainingFragmentViewModel)
+        fragmentManager?.let { addSetDialog.show(it, null) }
+    }
+
+    override fun onDeleteRepButtonClick(rep: Rep) {
+        trainingFragmentViewModel.deleteRep(rep)
     }
 
 
