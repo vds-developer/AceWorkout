@@ -1,18 +1,14 @@
 package vds.developer.aceworkout
 
 import android.app.Dialog
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
-import kotlinx.android.synthetic.main.add_set_template.*
+import kotlinx.android.synthetic.main.add_rep_template.*
 import vds.developer.aceworkout.data.entities.Rep
 import vds.developer.aceworkout.data.entities.Set
-import vds.developer.aceworkout.models.SetModel
-import vds.developer.aceworkout.models.SingleRep
 import vds.developer.aceworkout.models.TrainingFragmentViewModel
 
 class RepDialog( ) : DialogFragment() {
@@ -47,7 +43,7 @@ class RepDialog( ) : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.add_set_template, container, false)
+        return inflater.inflate(R.layout.add_rep_template, container, false)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -1,4 +1,4 @@
-package vds.developer.aceworkout
+package vds.developer.aceworkout.trainingFragment
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import vds.developer.aceworkout.R
 import vds.developer.aceworkout.data.entities.Set
 import vds.developer.aceworkout.models.TrainingFragmentViewModel
 

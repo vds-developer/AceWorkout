@@ -51,7 +51,7 @@
         tools:itemCount="5"
         tools:listitem="@layout/single_rep">
 
-        <!--        <include layout="@layout/add_set_template" />-->
+        <!--        <include layout="@layout/add_rep_template" />-->
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.button.MaterialButton

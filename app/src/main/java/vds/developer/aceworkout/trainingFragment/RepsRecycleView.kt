@@ -1,4 +1,4 @@
-package vds.developer.aceworkout
+package vds.developer.aceworkout.trainingFragment
 
 
 import android.view.LayoutInflater
@@ -8,9 +8,8 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import vds.developer.aceworkout.R
 import vds.developer.aceworkout.data.entities.Rep
-import vds.developer.aceworkout.data.entities.Set
-import vds.developer.aceworkout.models.TrainingFragmentViewModel
 
 
 class RepsRecycleView(val reps : List<Rep>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

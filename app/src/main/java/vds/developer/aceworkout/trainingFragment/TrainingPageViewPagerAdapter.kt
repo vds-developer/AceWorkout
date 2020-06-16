@@ -1,16 +1,13 @@
-package vds.developer.aceworkout
+package vds.developer.aceworkout.trainingFragment
 
 import android.content.Context
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import vds.developer.aceworkout.R
 import vds.developer.aceworkout.models.TrainingFragmentViewModel
 
 class TrainingPageViewPagerAdapter(val context: Context,
@@ -44,16 +41,16 @@ class TrainingPageViewPagerAdapter(val context: Context,
 
     class TrainingPageViewHolder(itemView : View, hasData:Boolean) : RecyclerView.ViewHolder(itemView) {
         var trainingDayRecyclerView : RecyclerView = itemView.findViewById(R.id.trainingDayRecyclerView)
-        var addSetBtn : FloatingActionButton = itemView.findViewById(R.id.addWorkout)
+//        var addSetBtn : FloatingActionButton = itemView.findViewById(R.id.addWorkout)
         var noDataText : TextView = itemView.findViewById(R.id.noData)
         init {
             if(hasData){
                 trainingDayRecyclerView.visibility = View.VISIBLE
-                addSetBtn.visibility = View.VISIBLE
+//                addSetBtn.visibility = View.VISIBLE
                 noDataText.visibility = View.GONE
             } else {
                 trainingDayRecyclerView.visibility = View.GONE
-                addSetBtn.visibility = View.VISIBLE
+//                addSetBtn.visibility = View.VISIBLE
                 noDataText.visibility = View.VISIBLE
             }
 

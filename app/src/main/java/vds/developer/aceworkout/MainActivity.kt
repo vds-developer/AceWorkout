@@ -1,15 +1,12 @@
 package vds.developer.aceworkout
 
 import android.os.Bundle
-import android.view.Gravity
 import com.google.android.material.tabs.TabLayout
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import kotlinx.android.synthetic.main.activity_main.*
-import vds.developer.aceworkout.Adapters.BottomNavPagerAdapter
+import vds.developer.aceworkout.trainingFragment.TrainingFragment
 
 class MainActivity : AppCompatActivity() {
 

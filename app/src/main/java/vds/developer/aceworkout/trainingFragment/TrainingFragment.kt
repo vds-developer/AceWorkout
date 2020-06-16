@@ -1,5 +1,6 @@
-package vds.developer.aceworkout
+package vds.developer.aceworkout.trainingFragment
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,11 +11,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import kotlinx.android.synthetic.main.training_day_page.*
 import kotlinx.android.synthetic.main.training_view_pager.*
+import vds.developer.aceworkout.R
+import vds.developer.aceworkout.RepDialog
+import vds.developer.aceworkout.addSet.AddSetActivity
 import vds.developer.aceworkout.data.entities.Rep
 import vds.developer.aceworkout.data.entities.Set
 import vds.developer.aceworkout.models.TrainingFragmentViewModel
-import vds.developer.aceworkout.models.TrainingFragmentViewModelFactory
+import vds.developer.aceworkout.models.ViewModelFactory
+import vds.developer.aceworkout.models.ViewModelsEnum
 
 
 ///**
@@ -63,13 +69,19 @@ class TrainingFragment : Fragment(),
 
         this.trainingViewPager = view.findViewById(R.id.trainingViewPager)
         trainingViewPager.registerOnPageChangeCallback(pageChangeCallback)
-        trainingFragmentViewModel = ViewModelProvider(this, TrainingFragmentViewModelFactory(application = activity!!.application))
+        trainingFragmentViewModel = ViewModelProvider(this, ViewModelFactory(application = activity!!.application, viewModelEnum = ViewModelsEnum.TrainingFragment))
                 .get(TrainingFragmentViewModel::class.java)
 
         swipeLayout.setOnRefreshListener {
             trainingFragmentViewModel.refresh()
         }
 
+
+
+        addWorkout.setOnClickListener {
+            val intent =  Intent(activity, AddSetActivity::class.java)
+            startActivity(intent)
+        }
 
         trainingFragmentViewModel.trainingDayRepsSets.let { data ->
             data.observe(
