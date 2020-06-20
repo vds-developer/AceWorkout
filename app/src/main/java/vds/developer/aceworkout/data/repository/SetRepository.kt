@@ -15,4 +15,8 @@ class SetRepository(app: Application) {
 //    fun getAllSetForDay(trainingDay: TrainingDay) : LiveData<List<Set>> {
 //        return setDao.getSetByTrainingDayId(trainingDayId = trainingDay.trainingDayId)
 //    }
+
+    suspend fun addSet(set: Set) {
+        setDao.addSet(set)
+    }
 }

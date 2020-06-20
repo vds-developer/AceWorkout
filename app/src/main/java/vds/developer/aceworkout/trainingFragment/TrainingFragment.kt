@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.training_day_page.*
 import kotlinx.android.synthetic.main.training_view_pager.*
 import vds.developer.aceworkout.R
@@ -75,13 +76,17 @@ class TrainingFragment : Fragment(),
         swipeLayout.setOnRefreshListener {
             trainingFragmentViewModel.refresh()
         }
-
-
-
-        addWorkout.setOnClickListener {
-            val intent =  Intent(activity, AddSetActivity::class.java)
-            startActivity(intent)
+        test.setOnClickListener {
+            val standardBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+            if (standardBottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }else {
+                standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
         }
+
+
+
 
         trainingFragmentViewModel.trainingDayRepsSets.let { data ->
             data.observe(
@@ -90,11 +95,6 @@ class TrainingFragment : Fragment(),
                 swipeLayout.isRefreshing = false
             })
         }
-//        var training_set_recycleView = this.training_day_page.findViewById<RecyclerView>(R.id.training_set_recycleView)
-//        training_day_page.adapter = TrainingViewAdapter(trainingModel, fragmentManager!!, context.requireContext())
-
-
-
     }
 
     /*

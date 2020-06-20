@@ -1,13 +1,16 @@
 package vds.developer.aceworkout.trainingFragment
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import vds.developer.aceworkout.R
+import vds.developer.aceworkout.addSet.AddSetActivity
 import vds.developer.aceworkout.models.TrainingFragmentViewModel
 
 class TrainingPageViewPagerAdapter(val context: Context,
@@ -18,11 +21,13 @@ class TrainingPageViewPagerAdapter(val context: Context,
         RecyclerView.Adapter<TrainingPageViewPagerAdapter.TrainingPageViewHolder>() {
 
     private var hasData : Boolean = false;
+    private lateinit var parent : ViewGroup;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingPageViewHolder {
         hasData = trainingDaySetsReps.reps.isNotEmpty()
         var trainingPageView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.training_day_page, parent, false)
+        this.parent = parent
         return TrainingPageViewHolder(trainingPageView, hasData)
     }
 
@@ -36,12 +41,18 @@ class TrainingPageViewPagerAdapter(val context: Context,
         if (hasData) {
             holder.trainingDayRecyclerView.adapter = TrainingDayRecycleView(trainingDaySetsReps, setItemListener, repItemListener)
         }
+        holder.addWorkout.setOnClickListener {
+            val intent =  Intent(parent.context, AddSetActivity::class.java)
+            intent.putExtra("trainingDayId", trainingDaySetsReps.trainingDay.trainingDayId)
+            startActivity(parent.context, intent, null)
+        }
+
 
     }
 
     class TrainingPageViewHolder(itemView : View, hasData:Boolean) : RecyclerView.ViewHolder(itemView) {
         var trainingDayRecyclerView : RecyclerView = itemView.findViewById(R.id.trainingDayRecyclerView)
-//        var addSetBtn : FloatingActionButton = itemView.findViewById(R.id.addWorkout)
+        var addWorkout : FloatingActionButton = itemView.findViewById(R.id.addWorkout)
         var noDataText : TextView = itemView.findViewById(R.id.noData)
         init {
             if(hasData){
