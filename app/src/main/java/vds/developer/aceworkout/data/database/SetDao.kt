@@ -1,7 +1,5 @@
 package vds.developer.aceworkout.data.database
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,14 +9,17 @@ import vds.developer.aceworkout.data.entities.Set
 @Dao
 interface SetDao {
     @Query("SELECT * FROM `Set` ORDER BY setId")
-    suspend fun getAllSet():List<Set>
+    suspend fun getAllSet(): List<Set>
 
     @Query("SELECT * FROM `Set` where trainingDayId = :trainingDayId ORDER BY setId")
     suspend fun getSetByTrainingDayId(trainingDayId: Long): List<Set>
 
     @Query("SELECT * FROM `Set` WHERE exerciseId = :exerciseId ORDER BY setId")
-    suspend fun getSetByExerciseId(exerciseId : Long) : List<Set>
+    suspend fun getSetByExerciseId(exerciseId: Long): List<Set>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun addSet(set : Set)
+    suspend fun addSet(set: Set)
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun addSets(set: List<Set>)
 }

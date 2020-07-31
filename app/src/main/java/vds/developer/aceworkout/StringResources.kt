@@ -14,4 +14,4 @@ class StringResources {
         val bodyPartDescriptionLegs = "Leg"
         val bodyPartImageLegs = "Leg"
     }
-    }
+}

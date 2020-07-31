@@ -1,10 +1,10 @@
-package vds.developer.aceworkout.data.entities;
+package vds.developer.aceworkout.data.entities
 
-import androidx.room.Entity;
+import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.Index
-import androidx.room.PrimaryKey;
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "Set", indices = [Index("trainingDayId"), Index("setId")],
         foreignKeys =
@@ -17,10 +17,8 @@ data class Set(
         @PrimaryKey(autoGenerate = true)
         val setId: Long,
         // exercise name
-        val setName : String,
+        val setName: String,
         val trainingDayId: Long,
         val exerciseId: Long,
         val numberOfReps: Int
-        ) {
-
-}
+)

@@ -3,7 +3,9 @@ package vds.developer.aceworkout.models
 import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import vds.developer.aceworkout.DummyData.TrainingDayGenerator
 import vds.developer.aceworkout.data.entities.Exercise
@@ -15,26 +17,24 @@ import java.time.LocalDate
 
 //@RequiresApi(Build.VERSION_CODES.O)
 @RequiresApi(Build.VERSION_CODES.O)
-class TrainingFragmentViewModel (application: Application) : AndroidViewModel(application) {
+class TrainingFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
-    public data class TrainingDaySetsReps(var trainingDay: TrainingDay, var sets: List<Set>, var reps : List<Rep>, var exercises: List<Exercise> ){
+    data class TrainingDaySetsReps(var trainingDay: TrainingDay, var sets: List<Set>, var reps: List<Rep>, var exercises: List<Exercise>)
 
-    }
-
-    public var trainingDayRepsSets : MutableLiveData<TrainingDaySetsReps> = MutableLiveData();
+    var trainingDayRepsSets: MutableLiveData<TrainingDaySetsReps> = MutableLiveData()
 
     private lateinit var currentTrainingDay: TrainingDay
     private lateinit var setsForCurrentTrainingDay: List<Set>
-    private lateinit var repsForCurrentSet : MutableList<Rep>
-    private lateinit var exercises : MutableList<Exercise>
+    private lateinit var repsForCurrentSet: MutableList<Rep>
+    private lateinit var exercises: MutableList<Exercise>
 
-    private var trainingDayRepository : TrainingDayRepository = TrainingDayRepository(application)
-    lateinit var date : LocalDate
+    private var trainingDayRepository: TrainingDayRepository = TrainingDayRepository(application)
+    lateinit var date: LocalDate
 
     init {
         trainingDayRepsSets = MutableLiveData()
 
-        trainingDayRepsSets?.value = TrainingDaySetsReps(
+        trainingDayRepsSets.value = TrainingDaySetsReps(
                 TrainingDayGenerator.trainingDays[0],
                 TrainingDayGenerator.sets,
                 TrainingDayGenerator.reps,
@@ -45,7 +45,7 @@ class TrainingFragmentViewModel (application: Application) : AndroidViewModel(ap
 //        update(date)
     }
 
-    fun update(date : LocalDate) {
+    fun update(date: LocalDate) {
         this.date = date
         viewModelScope.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -53,7 +53,7 @@ class TrainingFragmentViewModel (application: Application) : AndroidViewModel(ap
                 currentTrainingDay = trainingDayRepository.getTrainingDay(date)
 
                 // initialize sets for day
-                setsForCurrentTrainingDay =  trainingDayRepository.getSetsByTrainingDayId(currentTrainingDay.trainingDayId)
+                setsForCurrentTrainingDay = trainingDayRepository.getSetsByTrainingDayId(currentTrainingDay.trainingDayId)
 
                 // initialize reps for all sets
                 repsForCurrentSet = mutableListOf<Rep>()
@@ -64,14 +64,14 @@ class TrainingFragmentViewModel (application: Application) : AndroidViewModel(ap
                 for (rep: Rep in repsForCurrentSet) {
                     exercises.add(trainingDayRepository.getExerciseById(rep.exerciseId))
                 }
-                trainingDayRepsSets!!.value = TrainingDaySetsReps(currentTrainingDay, setsForCurrentTrainingDay, repsForCurrentSet.toList(), exercises.toList())
+                trainingDayRepsSets.value = TrainingDaySetsReps(currentTrainingDay, setsForCurrentTrainingDay, repsForCurrentSet.toList(), exercises.toList())
             }
         }
     }
 
     fun refresh() {
         TrainingDayGenerator.Regenerate()
-        trainingDayRepsSets?.value = TrainingDaySetsReps(
+        trainingDayRepsSets.value = TrainingDaySetsReps(
                 TrainingDayGenerator.trainingDays[0],
                 TrainingDayGenerator.sets,
                 TrainingDayGenerator.reps,
@@ -87,18 +87,18 @@ class TrainingFragmentViewModel (application: Application) : AndroidViewModel(ap
 
     }
 
-    fun addRep(rep : Rep) {
+    fun addRep(rep: Rep) {
 //        viewModelScope.launch {
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //                trainingDayRepository.insertRep(rep)
 //            }
 //        }
 
-        var model = trainingDayRepsSets?.value
+        var model = trainingDayRepsSets.value
         var newReps = mutableListOf<Rep>()
-        newReps  = model!!.reps?.let {it -> it.toMutableList() }
+        newReps = model!!.reps.let { it -> it.toMutableList() }
         val add = newReps.add(rep)
-        trainingDayRepsSets?.value = TrainingDaySetsReps(
+        trainingDayRepsSets.value = TrainingDaySetsReps(
                 model.trainingDay,
                 model.sets,
                 newReps.toList(),
@@ -106,16 +106,16 @@ class TrainingFragmentViewModel (application: Application) : AndroidViewModel(ap
         )
     }
 
-    fun editRep (rep : Rep) {
+    fun editRep(rep: Rep) {
         var repId = rep.repId
-        var model = trainingDayRepsSets?.value
+        var model = trainingDayRepsSets.value
         var modifyRep = mutableListOf<Rep>()
-        modifyRep  = model!!.reps?.let {it -> it.toMutableList() }
-        var removeRep = modifyRep.stream().filter { rep -> rep.repId == repId }.findFirst().orElse(Rep(0,0,-1,0.0,0,0))
+        modifyRep = model!!.reps.let { it -> it.toMutableList() }
+        var removeRep = modifyRep.stream().filter { rep -> rep.repId == repId }.findFirst().orElse(Rep(0, 0, -1, 0.0, 0, 0))
         modifyRep.remove(removeRep)
         modifyRep.add(rep)
 
-        trainingDayRepsSets?.value = TrainingDaySetsReps(
+        trainingDayRepsSets.value = TrainingDaySetsReps(
                 model.trainingDay,
                 model.sets,
                 modifyRep.toList(),
@@ -123,14 +123,14 @@ class TrainingFragmentViewModel (application: Application) : AndroidViewModel(ap
         )
     }
 
-    fun deleteRep(rep : Rep) {
+    fun deleteRep(rep: Rep) {
         var repId = rep.repId
-        var model = trainingDayRepsSets?.value
+        var model = trainingDayRepsSets.value
         var modifyRep = mutableListOf<Rep>()
-        modifyRep  = model!!.reps?.let {it -> it.toMutableList() }
-        var removeRep = modifyRep.stream().filter { rep -> rep.repId == repId }.findFirst().orElse(Rep(0,0,-1,0.0,0,0))
+        modifyRep = model!!.reps.let { it -> it.toMutableList() }
+        var removeRep = modifyRep.stream().filter { rep -> rep.repId == repId }.findFirst().orElse(Rep(0, 0, -1, 0.0, 0, 0))
         modifyRep.remove(removeRep)
-        trainingDayRepsSets?.value = TrainingDaySetsReps(
+        trainingDayRepsSets.value = TrainingDaySetsReps(
                 model.trainingDay,
                 model.sets,
                 modifyRep.toList(),

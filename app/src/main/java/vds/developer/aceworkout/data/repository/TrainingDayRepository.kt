@@ -2,15 +2,11 @@ package vds.developer.aceworkout.data.repository
 
 import android.app.Application
 import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import vds.developer.aceworkout.data.database.TrainingDataBase
-import vds.developer.aceworkout.data.entities.*
+import vds.developer.aceworkout.data.entities.Exercise
+import vds.developer.aceworkout.data.entities.Rep
 import vds.developer.aceworkout.data.entities.Set
+import vds.developer.aceworkout.data.entities.TrainingDay
 import java.time.LocalDate
 
 //@RequiresApi(Build.VERSION_CODES.O)
@@ -30,24 +26,24 @@ class TrainingDayRepository(val app: Application) {
         }
     }
 
-     suspend fun getTrainingDay(date:LocalDate) : TrainingDay {
-         return trainingDayDao.getTrainingDayByDate(date)
+    suspend fun getTrainingDay(date: LocalDate): TrainingDay {
+        return trainingDayDao.getTrainingDayByDate(date)
     }
 
-    suspend fun getSetsByTrainingDayId(trainingId : Long) : List<Set> {
+    suspend fun getSetsByTrainingDayId(trainingId: Long): List<Set> {
         return setDao.getSetByTrainingDayId(trainingId)
     }
 
-    suspend fun getRepsBySetId(setId : Long) : List<Rep> {
+    suspend fun getRepsBySetId(setId: Long): List<Rep> {
         return repDao.getAllRepBySet(setId)
     }
 
-    suspend fun getExerciseById(exerciseId : Long) : Exercise {
+    suspend fun getExerciseById(exerciseId: Long): Exercise {
         return exerciseDao.getExerciseById(exerciseId)
     }
 
     suspend fun insertRep(rep: Rep) {
-        repDao.insertRep(rep)
+        repDao.addRep(rep)
     }
 
 

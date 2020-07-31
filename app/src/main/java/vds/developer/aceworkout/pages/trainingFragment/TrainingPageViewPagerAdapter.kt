@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.trainingFragment
+package vds.developer.aceworkout.pages.trainingFragment
 
 import android.content.Context
 import android.content.Intent
@@ -10,18 +10,18 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import vds.developer.aceworkout.R
-import vds.developer.aceworkout.addSet.AddSetActivity
 import vds.developer.aceworkout.models.TrainingFragmentViewModel
+import vds.developer.aceworkout.pages.addSet.AddSetActivity
 
 class TrainingPageViewPagerAdapter(val context: Context,
                                    val trainingDaySetsReps: TrainingFragmentViewModel.TrainingDaySetsReps,
                                    val setItemListener: TrainingDayRecycleView.TrainingSetItemListener,
                                    val repItemListener: RepsRecycleView.RepItemListener
-                                            ) :
+) :
         RecyclerView.Adapter<TrainingPageViewPagerAdapter.TrainingPageViewHolder>() {
 
-    private var hasData : Boolean = false;
-    private lateinit var parent : ViewGroup;
+    private var hasData: Boolean = false
+    private lateinit var parent: ViewGroup
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingPageViewHolder {
         hasData = trainingDaySetsReps.reps.isNotEmpty()
@@ -42,7 +42,7 @@ class TrainingPageViewPagerAdapter(val context: Context,
             holder.trainingDayRecyclerView.adapter = TrainingDayRecycleView(trainingDaySetsReps, setItemListener, repItemListener)
         }
         holder.addWorkout.setOnClickListener {
-            val intent =  Intent(parent.context, AddSetActivity::class.java)
+            val intent = Intent(parent.context, AddSetActivity::class.java)
             intent.putExtra("trainingDayId", trainingDaySetsReps.trainingDay.trainingDayId)
             startActivity(parent.context, intent, null)
         }
@@ -50,18 +50,17 @@ class TrainingPageViewPagerAdapter(val context: Context,
 
     }
 
-    class TrainingPageViewHolder(itemView : View, hasData:Boolean) : RecyclerView.ViewHolder(itemView) {
-        var trainingDayRecyclerView : RecyclerView = itemView.findViewById(R.id.trainingDayRecyclerView)
-        var addWorkout : FloatingActionButton = itemView.findViewById(R.id.addWorkout)
-        var noDataText : TextView = itemView.findViewById(R.id.noData)
+    class TrainingPageViewHolder(itemView: View, hasData: Boolean) : RecyclerView.ViewHolder(itemView) {
+        var trainingDayRecyclerView: RecyclerView = itemView.findViewById(R.id.trainingDayRecyclerView)
+        var addWorkout: FloatingActionButton = itemView.findViewById(R.id.addWorkout)
+        var noDataText: TextView = itemView.findViewById(R.id.noData)
+
         init {
-            if(hasData){
+            if (hasData) {
                 trainingDayRecyclerView.visibility = View.VISIBLE
-//                addSetBtn.visibility = View.VISIBLE
                 noDataText.visibility = View.GONE
             } else {
                 trainingDayRecyclerView.visibility = View.GONE
-//                addSetBtn.visibility = View.VISIBLE
                 noDataText.visibility = View.VISIBLE
             }
 

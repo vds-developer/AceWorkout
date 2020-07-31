@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import vds.developer.aceworkout.fragments.ReportFragment
 import vds.developer.aceworkout.fragments.SettingFragment
 import vds.developer.aceworkout.fragments.SummaryFragment
-import vds.developer.aceworkout.trainingFragment.TrainingFragment
+import vds.developer.aceworkout.pages.trainingFragment.TrainingFragment
 
 class BottomNavPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 

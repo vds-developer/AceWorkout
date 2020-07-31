@@ -1,6 +1,5 @@
-package vds.developer.aceworkout.trainingFragment
+package vds.developer.aceworkout.pages.trainingFragment
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,12 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.training_day_page.*
 import kotlinx.android.synthetic.main.training_view_pager.*
 import vds.developer.aceworkout.R
 import vds.developer.aceworkout.RepDialog
-import vds.developer.aceworkout.addSet.AddSetActivity
 import vds.developer.aceworkout.data.entities.Rep
 import vds.developer.aceworkout.data.entities.Set
 import vds.developer.aceworkout.models.TrainingFragmentViewModel
@@ -47,14 +43,8 @@ class TrainingFragment : Fragment(),
 
     lateinit var trainingFragmentViewModel: TrainingFragmentViewModel
     val context by lazy { this }
-    lateinit var trainingViewPager : ViewPager2
+    lateinit var trainingViewPager: ViewPager2
 //    private currentPage=0;
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -76,18 +66,25 @@ class TrainingFragment : Fragment(),
         swipeLayout.setOnRefreshListener {
             trainingFragmentViewModel.refresh()
         }
-        test.setOnClickListener {
-            val standardBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-            if (standardBottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            }else {
-                standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            }
-        }
+//        val standardBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+//        standardBottomSheetBehavior.peekHeight = 300
+//        standardBottomSheetBehavior.isHideable = true
+//        fragmentManager
 
-
-
-
+//        test.setOnClickListener {
+////            if (standardBottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+////                standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+////            }else {
+////                standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+////            }
+////
+//////            val view = layoutInflater.inflate(R.layout.fragment_bottom_sheet_stat, null)
+//////            val dialog = BottomSheetDialog(activity!!.applicationContext)
+//////            dialog.setContentView(view)
+//////            dialog.show()
+//            val BottomSheetStatsFragment = BottomSheetStatsFragment()
+//            BottomSheetStatsFragment.show(fragmentManager!!, "test")
+//        }
         trainingFragmentViewModel.trainingDayRepsSets.let { data ->
             data.observe(
                     this, androidx.lifecycle.Observer {
@@ -114,19 +111,24 @@ class TrainingFragment : Fragment(),
 
     }
 
-    private fun showAddRep(set:Set) {
+    private fun showAddRep(set: Set) {
         val addSetDialog = RepDialog(set, trainingFragmentViewModel)
         fragmentManager?.let { addSetDialog.show(it, null) }
 
     }
 
-    override fun onEditRepButtonClick(rep : Rep) {
+    override fun onEditRepButtonClick(rep: Rep) {
         val addSetDialog = RepDialog(rep, trainingFragmentViewModel)
         fragmentManager?.let { addSetDialog.show(it, null) }
     }
 
     override fun onDeleteRepButtonClick(rep: Rep) {
         trainingFragmentViewModel.deleteRep(rep)
+    }
+
+    override fun showStats(set: Set) {
+        val BottomSheetStatsFragment = BottomSheetStatsFragment(exerciseId = set.exerciseId)
+        BottomSheetStatsFragment.show(fragmentManager!!, "test")
     }
 
 

@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.trainingFragment
+package vds.developer.aceworkout.pages.trainingFragment
 
 
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import vds.developer.aceworkout.R
 import vds.developer.aceworkout.data.entities.Rep
 
 
-class RepsRecycleView(val reps : List<Rep>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RepsRecycleView(val reps: List<Rep>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 //    private var reps = trainingDaySetsReps.reps
 
@@ -28,7 +28,7 @@ class RepsRecycleView(val reps : List<Rep>, val repItemListener: RepItemListener
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val rep = reps[position]
-        val viewHolder : RecycleExerciseItemViewHolder = holder as RecycleExerciseItemViewHolder
+        val viewHolder: RecycleExerciseItemViewHolder = holder as RecycleExerciseItemViewHolder
         viewHolder.repsText.text = rep.reps.toString()
         viewHolder.weightText.text = rep.weight.toString()
         viewHolder.itemView.setOnClickListener { showMenu(viewHolder.itemView) }
@@ -43,14 +43,14 @@ class RepsRecycleView(val reps : List<Rep>, val repItemListener: RepItemListener
     }
 
     interface RepItemListener {
-        fun onEditRepButtonClick(rep : Rep)
-        fun onDeleteRepButtonClick(rep : Rep)
+        fun onEditRepButtonClick(rep: Rep)
+        fun onDeleteRepButtonClick(rep: Rep)
     }
 
     class RecycleExerciseItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var weightText : TextView = itemView.findViewById(R.id.weight)
-        var repsText : TextView = itemView.findViewById(R.id.reps)
-        var editButton : ImageButton = itemView.findViewById(R.id.editButton)
-        var deleteButton : ImageButton = itemView.findViewById(R.id.deleteButton)
+        var weightText: TextView = itemView.findViewById(R.id.weight)
+        var repsText: TextView = itemView.findViewById(R.id.reps)
+        var editButton: ImageButton = itemView.findViewById(R.id.editButton)
+        var deleteButton: ImageButton = itemView.findViewById(R.id.deleteButton)
     }
 }

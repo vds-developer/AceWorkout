@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.addSet
+package vds.developer.aceworkout.pages.addSet
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -13,9 +13,9 @@ import vds.developer.aceworkout.R
 import vds.developer.aceworkout.StringResources
 import vds.developer.aceworkout.models.BodyPartEnum
 
-class BodyPartRecyclerView(internal val trainingDayId: Long): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val bodyParts:  Array<BodyPartEnum> = BodyPartEnum.values();
-    private lateinit var parent : ViewGroup;
+class BodyPartRecyclerView(internal val trainingDayId: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val bodyParts: Array<BodyPartEnum> = BodyPartEnum.values()
+    private lateinit var parent: ViewGroup
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -30,10 +30,10 @@ class BodyPartRecyclerView(internal val trainingDayId: Long): RecyclerView.Adapt
         return bodyParts.size
     }
 
-    override fun onBindViewHolder(holder:  RecyclerView.ViewHolder, position: Int) {
-        var description=""
-        var title =""
-        when(bodyParts[position]) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        var description = ""
+        var title = ""
+        when (bodyParts[position]) {
             BodyPartEnum.Arms -> {
                 description = StringResources.bodyPartDescriptionArm
                 title = StringResources.bodyPartNameArm
@@ -52,7 +52,7 @@ class BodyPartRecyclerView(internal val trainingDayId: Long): RecyclerView.Adapt
             it.description.text = description
             it.title.text = title
             it.card.setOnClickListener {
-                val intent =  Intent(parent.context, SelectWorkout::class.java)
+                val intent = Intent(parent.context, SelectWorkout::class.java)
                 intent.putExtra("bodyPart", bodyParts[position].name)
                 intent.putExtra("trainingDayId", trainingDayId)
                 startActivity(parent.context, intent, null)

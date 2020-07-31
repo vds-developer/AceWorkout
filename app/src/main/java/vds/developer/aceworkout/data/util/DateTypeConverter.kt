@@ -3,7 +3,6 @@ package vds.developer.aceworkout.data.util
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
-import java.sql.Date
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -27,7 +26,7 @@ class DateTypeConverter {
     @TypeConverter
     fun dateToLong(date: LocalDate?): Long? {
         if (date == null) return 0
-        return date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
+        return date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

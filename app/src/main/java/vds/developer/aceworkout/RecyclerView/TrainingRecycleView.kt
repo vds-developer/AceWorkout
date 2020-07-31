@@ -1,13 +1,13 @@
 package vds.developer.aceworkout.RecyclerView
 
 
-//import vds.developer.aceworkout.trainingFragment.TrainingFragment.OnListFragmentInteractionListener;
+//import vds.developer.aceworkout.pages.trainingFragment.TrainingFragment.OnListFragmentInteractionListener;
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import vds.developer.aceworkout.R
 import vds.developer.aceworkout.models.TrainingFragmentViewModel
 import java.util.*

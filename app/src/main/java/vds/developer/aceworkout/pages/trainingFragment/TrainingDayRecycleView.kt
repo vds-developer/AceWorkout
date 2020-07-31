@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.trainingFragment
+package vds.developer.aceworkout.pages.trainingFragment
 
 import android.view.LayoutInflater
 import android.view.View
@@ -38,9 +38,11 @@ class TrainingDayRecycleView(
         viewHolder.addSetButton.setOnClickListener {
             setItemListener.onAddTrainingSetButtonClick(set)
         }
+        viewHolder.setName.setOnClickListener {
+            setItemListener.showStats(set)
+
+        }
         viewHolder.setsRecyclerView.adapter = RepsRecycleView(trainingDaySetsReps.reps.filter { rep -> rep.setId == set.setId }, repItemListener)
-
-
 
 
     }
@@ -52,7 +54,6 @@ class TrainingDayRecycleView(
 //    }
 
 
-
     inner class RecycleTrainingSetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var setName: TextView = itemView.findViewById(R.id.training_name)
         var setsRecyclerView: RecyclerView = itemView.findViewById(R.id.trainingSetRecyclerView)
@@ -61,6 +62,9 @@ class TrainingDayRecycleView(
     }
 
     interface TrainingSetItemListener {
-        fun onAddTrainingSetButtonClick(set : Set)
+        fun onAddTrainingSetButtonClick(set: Set)
+
+        fun showStats(set: Set)
     }
+
 }

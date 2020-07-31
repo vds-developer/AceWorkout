@@ -1,9 +1,5 @@
 package vds.developer.aceworkout.data.entities
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.Relation
-
 //
 //data class TrainingDaySetsAndReps(
 //        @Embedded

@@ -1,12 +1,12 @@
 package vds.developer.aceworkout
 
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
-import androidx.fragment.app.FragmentManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
-import vds.developer.aceworkout.trainingFragment.TrainingFragment
+import vds.developer.aceworkout.pages.trainingFragment.TrainingFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,8 +22,6 @@ class MainActivity : AppCompatActivity() {
             drawer.openDrawer(GravityCompat.START)
         }
     }
-
-
 
 
     private fun switchFragments() {

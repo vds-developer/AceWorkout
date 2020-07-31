@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:clickable="true"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/repsHeader"
         app:layout_constraintStart_toStartOf="parent"
