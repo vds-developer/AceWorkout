@@ -1,9 +1,9 @@
-package vds.developer.aceworkout.data.repository
+package vds.developer.aceworkout.db.repository
 
 import android.app.Application
-import vds.developer.aceworkout.data.database.SetDao
-import vds.developer.aceworkout.data.database.TrainingDataBase
-import vds.developer.aceworkout.data.entities.Set
+import vds.developer.aceworkout.db.dao.SetDao
+import vds.developer.aceworkout.db.TrainingDataBase
+import vds.developer.aceworkout.db.entities.SetEntity
 
 
 class SetRepository(app: Application) {
@@ -13,7 +13,7 @@ class SetRepository(app: Application) {
 //        return setDao.getSetByTrainingDayId(trainingDayId = trainingDay.trainingDayId)
 //    }
 
-    suspend fun addSet(set: Set) {
-        setDao.addSet(set)
+    suspend fun addSet(setEntity: SetEntity) {
+        setDao.addSet(setEntity)
     }
 }

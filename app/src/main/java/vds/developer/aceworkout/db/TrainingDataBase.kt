@@ -1,26 +1,29 @@
-package vds.developer.aceworkout.data.database
+package vds.developer.aceworkout.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import vds.developer.aceworkout.data.entities.Exercise
-import vds.developer.aceworkout.data.entities.Rep
-import vds.developer.aceworkout.data.entities.Set
-import vds.developer.aceworkout.data.entities.TrainingDay
-import vds.developer.aceworkout.data.util.DateTypeConverter
+import vds.developer.aceworkout.db.dao.ExerciseDao
+import vds.developer.aceworkout.db.dao.RepDao
+import vds.developer.aceworkout.db.dao.SetDao
+import vds.developer.aceworkout.db.dao.TrainingDayDao
+import vds.developer.aceworkout.db.entities.ExerciseEntity
+import vds.developer.aceworkout.db.entities.RepEntity
+import vds.developer.aceworkout.db.entities.SetEntity
+import vds.developer.aceworkout.db.entities.TrainingDayEntity
+import vds.developer.aceworkout.db.util.DateTypeConverter
 
 
 @Database(entities = [
-    TrainingDay::class,
-    Set::class,
-    Rep::class,
-    Exercise::class], version = 1, exportSchema = false)
+    TrainingDayEntity::class,
+    SetEntity::class,
+    RepEntity::class,
+    ExerciseEntity::class], version = 1, exportSchema = false)
 
 @TypeConverters(DateTypeConverter::class)
 
@@ -52,8 +55,10 @@ abstract class TrainingDataBase : RoomDatabase() {
             return INSTANCE!!
         }
 
-        fun getInstance(context: Context): TrainingDataBase = INSTANCE ?: synchronized(this) {
-            INSTANCE ?: getDataBase(context).also { INSTANCE = it }
+        fun getInstance(context: Context): TrainingDataBase = INSTANCE
+                ?: synchronized(this) {
+            INSTANCE
+                    ?: getDataBase(context).also { INSTANCE = it }
         }
 
         private val PrePopulate = object : RoomDatabase.Callback() {

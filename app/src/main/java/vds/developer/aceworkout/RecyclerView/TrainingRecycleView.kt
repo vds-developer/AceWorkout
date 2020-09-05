@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import vds.developer.aceworkout.R
-import vds.developer.aceworkout.models.TrainingFragmentViewModel
+import vds.developer.aceworkout.pages.trainingFragment.TrainingFragmentViewModel
 import java.util.*
 
 

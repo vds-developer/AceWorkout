@@ -1,15 +1,13 @@
 package vds.developer.aceworkout.pages.addSet
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.add_set_exercise_activity.*
-import kotlinx.android.synthetic.main.add_set_exercise_activity.topAppBar
 import vds.developer.aceworkout.R
-import vds.developer.aceworkout.data.entities.Set
-import vds.developer.aceworkout.models.SelectWorkoutViewModel
+import vds.developer.aceworkout.db.entities.SetEntity
 import vds.developer.aceworkout.models.ViewModelFactory
 import vds.developer.aceworkout.models.ViewModelsEnum
 
@@ -36,7 +34,7 @@ class SelectWorkout : AppCompatActivity(), SelectWorkoutRecyclerView.AddSetListe
 
         selectWorkoutViewModel.updateFilter(bodyPart)
 
-        selectWorkoutViewModel.exercise.observe(
+        selectWorkoutViewModel.exerciseEntity.observe(
                 this, androidx.lifecycle.Observer {
             recyclerExerciseList.adapter = SelectWorkoutRecyclerView(it, trainingDayId, this)
         }
@@ -44,8 +42,8 @@ class SelectWorkout : AppCompatActivity(), SelectWorkoutRecyclerView.AddSetListe
 
     }
 
-    override fun addSetClick(set: Set) {
-        selectWorkoutViewModel.addSet(set)
+    override fun addSetClick(setEntity: SetEntity) {
+        selectWorkoutViewModel.addSet(setEntity)
         Toast.makeText(applicationContext, "Added Set", Toast.LENGTH_LONG).show()
     }
 }

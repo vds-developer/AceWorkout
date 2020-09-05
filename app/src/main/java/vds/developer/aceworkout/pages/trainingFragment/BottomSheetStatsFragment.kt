@@ -82,16 +82,4 @@ class BottomSheetStatsFragment(private val exerciseId: Long) : BottomSheetDialog
         // set data
         lineChart.data = data
     }
-
-
-//    companion object {
-//
-//        // TODO: Customize parameters
-//        fun newInstance(itemCount: Int): BottomSheetStatsFragment =
-//                BottomSheetStatsFragment(exerciseId).apply {
-//                    arguments = Bundle().apply {
-//                        putInt(ARG_ITEM_COUNT, itemCount)
-//                    }
-//                }
-//    }
 }

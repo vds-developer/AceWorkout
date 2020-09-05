@@ -1,9 +1,9 @@
-package vds.developer.aceworkout.data.entities
+package vds.developer.aceworkout.db.entities
 
 import java.time.LocalDate
 import java.time.ZonedDateTime
 
-data class DateTime(
+data class DateTimeEntity(
         val localDate: LocalDate,
 //    val localTime: LocalTime,
 //        @TypeConverters(DateTime::class)

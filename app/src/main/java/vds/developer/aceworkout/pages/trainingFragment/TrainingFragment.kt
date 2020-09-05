@@ -2,20 +2,20 @@ package vds.developer.aceworkout.pages.trainingFragment
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import kotlinx.android.synthetic.main.training_view_pager.*
 import vds.developer.aceworkout.R
 import vds.developer.aceworkout.RepDialog
-import vds.developer.aceworkout.data.entities.Rep
-import vds.developer.aceworkout.data.entities.Set
-import vds.developer.aceworkout.models.TrainingFragmentViewModel
+import vds.developer.aceworkout.db.entities.RepEntity
+import vds.developer.aceworkout.db.entities.SetEntity
 import vds.developer.aceworkout.models.ViewModelFactory
 import vds.developer.aceworkout.models.ViewModelsEnum
 
@@ -44,54 +44,54 @@ class TrainingFragment : Fragment(),
     lateinit var trainingFragmentViewModel: TrainingFragmentViewModel
     val context by lazy { this }
     lateinit var trainingViewPager: ViewPager2
-//    private currentPage=0;
+
+    //    private var currentPage : Int = Int.MAX_VALUE / 2
+    private var currentPage: Int = 0
+
+    private enum class PageState {
+        Previous, CURRENT, NEXT
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.training_view_pager, container, false)
-
-
-        return view
+        return inflater.inflate(R.layout.training_view_pager, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         this.trainingViewPager = view.findViewById(R.id.trainingViewPager)
-        trainingViewPager.registerOnPageChangeCallback(pageChangeCallback)
-        trainingFragmentViewModel = ViewModelProvider(this, ViewModelFactory(application = activity!!.application, viewModelEnum = ViewModelsEnum.TrainingFragment))
+
+        trainingFragmentViewModel = ViewModelProvider(
+                this,
+                ViewModelFactory(
+                        application = activity!!.application,
+                        viewModelEnum = ViewModelsEnum.TrainingFragment))
                 .get(TrainingFragmentViewModel::class.java)
 
-        swipeLayout.setOnRefreshListener {
-            trainingFragmentViewModel.refresh()
-        }
-//        val standardBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-//        standardBottomSheetBehavior.peekHeight = 300
-//        standardBottomSheetBehavior.isHideable = true
-//        fragmentManager
-
-//        test.setOnClickListener {
-////            if (standardBottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-////                standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-////            }else {
-////                standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-////            }
-////
-//////            val view = layoutInflater.inflate(R.layout.fragment_bottom_sheet_stat, null)
-//////            val dialog = BottomSheetDialog(activity!!.applicationContext)
-//////            dialog.setContentView(view)
-//////            dialog.show()
-//            val BottomSheetStatsFragment = BottomSheetStatsFragment()
-//            BottomSheetStatsFragment.show(fragmentManager!!, "test")
+//        swipeLayout.setDistanceToTriggerSync(300)
+//
+//
+//
+//        swipeLayout.setOnRefreshListener {
+//            trainingFragmentViewModel.refresh()
+//            swipeLayout.isRefreshing = false
 //        }
+//        trainingViewPager.setCurrentItem(currentPage, false)
+
+
         trainingFragmentViewModel.trainingDayRepsSets.let { data ->
             data.observe(
                     this, androidx.lifecycle.Observer {
                 trainingViewPager.adapter = TrainingPageViewPagerAdapter(this.requireContext(), it, this, this)
-                swipeLayout.isRefreshing = false
+//                swipeLayout.isRefreshing = false
+                trainingViewPager.registerOnPageChangeCallback(pageChangeCallback)
+//                trainingViewPager.offscreenPageLimit = 1;
             })
         }
+//        Log.i("info","Postition" + currentPage.toString())
+
     }
 
     /*
@@ -100,35 +100,51 @@ class TrainingFragment : Fragment(),
     var pageChangeCallback: OnPageChangeCallback = object : OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
-            dateText.text = trainingFragmentViewModel.date.toString()
+//            trainingViewPager.setCurrentItem(currentPage, false)
+//            when(position) {
+//                PageState.CURRENT.ordinal -> trainingViewPager.setCurrentItem(1, false)
+//                PageState.NEXT.ordinal -> trainingFragmentViewModel.getNext()
+//                PageState.Previous.ordinal ->  trainingFragmentViewModel.getPrev()
+//            }
+
+//            if (position > currentPage && position != 0){
+//                trainingFragmentViewModel.getNext()
+//                currentPage = position
+//
+//            } else if (position < currentPage && position != 0) {
+//                trainingFragmentViewModel.getPrev()
+//                currentPage = position
+//            }
+//
+//            trainingViewPager.setCurrentItem(currentPage, false)
+            Log.i("info", "Postition" + position.toString())
+            Toast.makeText(context.getContext(), position.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
-    override fun onAddTrainingSetButtonClick(set: Set) {
-        //todo
-        showAddRep(set)
-//        trainingFragmentViewModel.refresh()
-
+    override fun onAddTrainingSetButtonClick(setEntity: SetEntity) {
+        showAddRep(setEntity)
+        trainingFragmentViewModel.refresh()
     }
 
-    private fun showAddRep(set: Set) {
-        val addSetDialog = RepDialog(set, trainingFragmentViewModel)
+    private fun showAddRep(setEntity: SetEntity) {
+        val addSetDialog = RepDialog(setEntity, trainingFragmentViewModel)
         fragmentManager?.let { addSetDialog.show(it, null) }
 
     }
 
-    override fun onEditRepButtonClick(rep: Rep) {
-        val addSetDialog = RepDialog(rep, trainingFragmentViewModel)
+    override fun onEditRepButtonClick(repEntity: RepEntity) {
+        val addSetDialog = RepDialog(repEntity, trainingFragmentViewModel)
         fragmentManager?.let { addSetDialog.show(it, null) }
     }
 
-    override fun onDeleteRepButtonClick(rep: Rep) {
-        trainingFragmentViewModel.deleteRep(rep)
+    override fun onDeleteRepButtonClick(repEntity: RepEntity) {
+        trainingFragmentViewModel.deleteRep(repEntity)
     }
 
-    override fun showStats(set: Set) {
-        val BottomSheetStatsFragment = BottomSheetStatsFragment(exerciseId = set.exerciseId)
-        BottomSheetStatsFragment.show(fragmentManager!!, "test")
+    override fun showStats(setEntity: SetEntity) {
+        val bottomSheetStatsFragment = BottomSheetStatsFragment(exerciseId = setEntity.exerciseId)
+        bottomSheetStatsFragment.show(fragmentManager!!, "test")
     }
 
 

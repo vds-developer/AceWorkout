@@ -1,15 +1,15 @@
-package vds.developer.aceworkout.models
+package vds.developer.aceworkout.pages.addSet
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import vds.developer.aceworkout.data.entities.Exercise
-import vds.developer.aceworkout.data.repository.ExerciseRepository
+import vds.developer.aceworkout.db.entities.ExerciseEntity
+import vds.developer.aceworkout.db.repository.ExerciseRepository
 
 
 class AddSetActivityViewModel(app: Application) : AndroidViewModel(app) {
 
-    lateinit var allExercise: LiveData<List<Exercise>>
+    lateinit var allExerciseEntity: LiveData<List<ExerciseEntity>>
     private var exerciseRepository: ExerciseRepository = ExerciseRepository(app)
 
     init {

@@ -1,15 +1,14 @@
 package vds.developer.aceworkout
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.add_rep_template.*
-import vds.developer.aceworkout.data.entities.Rep
-import vds.developer.aceworkout.data.entities.Set
-import vds.developer.aceworkout.models.TrainingFragmentViewModel
+import vds.developer.aceworkout.db.entities.RepEntity
+import vds.developer.aceworkout.db.entities.SetEntity
+import vds.developer.aceworkout.pages.trainingFragment.TrainingFragmentViewModel
 
 class RepDialog() : DialogFragment() {
 
@@ -20,21 +19,21 @@ class RepDialog() : DialogFragment() {
     enum class mode { edit, add }
 
     lateinit var currentMode: mode
-    var set: Set? = null
-    var rep: Rep? = null
+    var setEntity: SetEntity? = null
+    var repEntity: RepEntity? = null
 
-    constructor(set: Set, trainingFragmentViewModel: TrainingFragmentViewModel) : this() {
+    constructor(setEntity: SetEntity, trainingFragmentViewModel: TrainingFragmentViewModel) : this() {
         currentMode = mode.add
         this.trainingFragmentViewModel = trainingFragmentViewModel
-        this.set = set
+        this.setEntity = setEntity
     }
 
-    constructor(rep: Rep, trainingFragmentViewModel: TrainingFragmentViewModel) : this() {
+    constructor(repEntity: RepEntity, trainingFragmentViewModel: TrainingFragmentViewModel) : this() {
         currentMode = mode.edit
         this.trainingFragmentViewModel = trainingFragmentViewModel
-        weight = rep.weight
-        reps = rep.reps
-        this.rep = rep
+        weight = repEntity.weight
+        reps = repEntity.reps
+        this.repEntity = repEntity
 
     }
 
@@ -71,8 +70,8 @@ class RepDialog() : DialogFragment() {
 //            setsModel.addSet(SingleRep(weight!!, reps!!))
 //            repsRecycleView.notifyItemInserted(setsModel.getSize()
             when (currentMode) {
-                mode.add -> trainingFragmentViewModel.addRep(Rep(0, set!!.setId, set!!.exerciseId, weight, reps, 0))
-                mode.edit -> trainingFragmentViewModel.editRep(Rep(rep!!.repId, rep!!.setId, rep!!.exerciseId, weight, reps, rep!!.time))
+                mode.add -> trainingFragmentViewModel.addRep(RepEntity(0, setEntity!!.setId, setEntity!!.exerciseId, weight, reps, 0))
+                mode.edit -> trainingFragmentViewModel.editRep(RepEntity(repEntity!!.repId, repEntity!!.setId, repEntity!!.exerciseId, weight, reps, repEntity!!.time))
             }
 
             dismiss()

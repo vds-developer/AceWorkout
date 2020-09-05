@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.data.entities
+package vds.developer.aceworkout.db.entities
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -7,17 +7,17 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Rep", indices = [Index("repId"), Index("setId"), Index("exerciseId")],
         foreignKeys = [ForeignKey(
-                entity = Set::class,
+                entity = SetEntity::class,
                 parentColumns = ["setId"],
                 childColumns = ["setId"],
                 onDelete = ForeignKey.CASCADE),
             ForeignKey(
-                    entity = Exercise::class,
+                    entity = ExerciseEntity::class,
                     parentColumns = ["exerciseId"],
                     childColumns = ["exerciseId"],
                     onDelete = ForeignKey.CASCADE)
         ])
-data class Rep(
+data class RepEntity(
         @PrimaryKey(autoGenerate = true)
         val repId: Long,
         val setId: Long,

@@ -2,8 +2,8 @@ package vds.developer.aceworkout.DummyData
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import vds.developer.aceworkout.data.entities.*
-import vds.developer.aceworkout.data.entities.Set
+import vds.developer.aceworkout.db.entities.*
+import vds.developer.aceworkout.db.entities.SetEntity
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.util.*
@@ -12,51 +12,51 @@ import java.util.*
 class TrainingDayGenerator {
     companion object {
         var random: Random = Random()
-        var trainingDays: List<TrainingDay> = GenerateTrainingDay(1)
+        var trainingDayEntities: List<TrainingDayEntity> = GenerateTrainingDay(1)
         var sets = GenerateSets(random.nextInt(5))
         var reps = GenerateReps(random.nextInt(5))
         var exercise = GenerateExercise(random.nextInt(5))
 
 
-        fun GenerateTrainingDay(size: Int): List<TrainingDay> {
-            var days: MutableList<TrainingDay> = mutableListOf()
+        fun GenerateTrainingDay(size: Int): List<TrainingDayEntity> {
+            var dayEntities: MutableList<TrainingDayEntity> = mutableListOf()
             for (i in 1..size) {
-                var dateTime = DateTime(LocalDate.now(), ZonedDateTime.now())
-                days.add(TrainingDay(i.toLong(), numberOfSets = 3, dateTime = dateTime))
+                var dateTime = DateTimeEntity(LocalDate.now(), ZonedDateTime.now())
+                dayEntities.add(TrainingDayEntity(i.toLong(), numberOfSets = 3, dateTime = dateTime))
             }
-            return days.toList()
+            return dayEntities.toList()
         }
 
-        fun GenerateSets(size: Int): List<Set> {
-            var sets: MutableList<Set> = mutableListOf()
+        fun GenerateSets(size: Int): List<SetEntity> {
+            var setEntities: MutableList<SetEntity> = mutableListOf()
             for (i in 1..size) {
-                for (trainingDay in trainingDays) {
-                    sets.add(Set(i.toLong(), "Name $i", trainingDay.trainingDayId, i.toLong(), 5))
+                for (trainingDay in trainingDayEntities) {
+                    setEntities.add(SetEntity(i.toLong(), "Name $i", trainingDay.trainingDayId, i.toLong(), 5))
                 }
             }
-            return sets.toList()
+            return setEntities.toList()
         }
 
-        fun GenerateReps(size: Int): List<Rep> {
-            var reps: MutableList<Rep> = mutableListOf()
+        fun GenerateReps(size: Int): List<RepEntity> {
+            var repEntities: MutableList<RepEntity> = mutableListOf()
             for (i in 1..size) {
                 for (set in sets) {
-                    reps.add(Rep(i.toLong(), set.setId, i.toLong(), 20.0, 10, 0))
+                    repEntities.add(RepEntity(i.toLong(), set.setId, i.toLong(), 20.0, 10, 0))
                 }
             }
-            return reps.toList()
+            return repEntities.toList()
         }
 
-        fun GenerateExercise(size: Int): List<Exercise> {
-            var exercises: MutableList<Exercise> = mutableListOf()
+        fun GenerateExercise(size: Int): List<ExerciseEntity> {
+            var exerciseEntities: MutableList<ExerciseEntity> = mutableListOf()
             for (i in 1..size) {
-                exercises.add(Exercise(i.toLong(), "Exercies $i", "Body part $1", true))
+                exerciseEntities.add(ExerciseEntity(i.toLong(), "Exercies $i", "Body part $1", true))
             }
-            return exercises.toList()
+            return exerciseEntities.toList()
         }
 
         fun Regenerate() {
-            trainingDays = GenerateTrainingDay(1)
+            trainingDayEntities = GenerateTrainingDay(1)
             sets = GenerateSets(random.nextInt(5))
             reps = GenerateReps(random.nextInt(5))
             exercise = GenerateExercise(random.nextInt(5))

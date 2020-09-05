@@ -9,10 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import vds.developer.aceworkout.MainActivity
 import vds.developer.aceworkout.R
-import vds.developer.aceworkout.data.entities.Exercise
-import vds.developer.aceworkout.data.entities.Set
+import vds.developer.aceworkout.db.entities.ExerciseEntity
+import vds.developer.aceworkout.db.entities.SetEntity
 
-class SelectWorkoutRecyclerView(var exercises: List<Exercise>, internal var trainingDayId: Long, var addSetListener: AddSetListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SelectWorkoutRecyclerView(var exerciseEntities: List<ExerciseEntity>, internal var trainingDayId: Long, var addSetListener: AddSetListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var parent: ViewGroup
 
 
@@ -24,16 +24,16 @@ class SelectWorkoutRecyclerView(var exercises: List<Exercise>, internal var trai
     }
 
     override fun getItemCount(): Int {
-        return exercises.size
+        return exerciseEntities.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as WorkoutViewHolder
-        var exercise = exercises[position]
+        var exercise = exerciseEntities[position]
         holder.workoutText.let {
-            it.text = exercises[position].name
+            it.text = exerciseEntities[position].name
             it.setOnClickListener {
-                addSetListener.addSetClick(Set(0, exercise.name, trainingDayId, exercise.exerciseId, 0))
+                addSetListener.addSetClick(SetEntity(0, exercise.name, trainingDayId, exercise.exerciseId, 0))
                 var intent = Intent(parent.context, MainActivity::class.java)
                 ContextCompat.startActivity(parent.context, intent, null)
             }
@@ -45,7 +45,7 @@ class SelectWorkoutRecyclerView(var exercises: List<Exercise>, internal var trai
     }
 
     interface AddSetListener {
-        fun addSetClick(set: Set)
+        fun addSetClick(setEntity: SetEntity)
     }
 
 }

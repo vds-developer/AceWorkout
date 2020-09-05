@@ -7,8 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import vds.developer.aceworkout.R
-import vds.developer.aceworkout.data.entities.Set
-import vds.developer.aceworkout.models.TrainingFragmentViewModel
+import vds.developer.aceworkout.db.entities.SetEntity
 
 
 class TrainingDayRecycleView(
@@ -17,7 +16,7 @@ class TrainingDayRecycleView(
         val repItemListener: RepsRecycleView.RepItemListener
 ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var sets = trainingDaySetsReps.sets
+    private var sets = trainingDaySetsReps.setEntities
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rootView = LayoutInflater.from(parent.context)
@@ -27,12 +26,12 @@ class TrainingDayRecycleView(
 
 
     override fun getItemCount(): Int {
-        return sets.size
+        return sets!!.size
     }
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val set = sets[position]
+        val set = sets!![position]
         val viewHolder: RecycleTrainingSetViewHolder = holder as RecycleTrainingSetViewHolder
         viewHolder.setName.text = set.setName
         viewHolder.addSetButton.setOnClickListener {
@@ -42,17 +41,10 @@ class TrainingDayRecycleView(
             setItemListener.showStats(set)
 
         }
-        viewHolder.setsRecyclerView.adapter = RepsRecycleView(trainingDaySetsReps.reps.filter { rep -> rep.setId == set.setId }, repItemListener)
+        viewHolder.setsRecyclerView.adapter = RepsRecycleView(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId }, repItemListener)
 
 
     }
-
-//
-//    private fun deleteSet(position: Int, viewHolder: RecycleTrainingSetViewHolder, set: SetModel) {
-//        trainingDayModel.deleteSet(position)
-//        viewHolder.setsRecyclerView.removeAllViews()
-//    }
-
 
     inner class RecycleTrainingSetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var setName: TextView = itemView.findViewById(R.id.training_name)
@@ -62,9 +54,8 @@ class TrainingDayRecycleView(
     }
 
     interface TrainingSetItemListener {
-        fun onAddTrainingSetButtonClick(set: Set)
-
-        fun showStats(set: Set)
+        fun onAddTrainingSetButtonClick(setEntity: SetEntity)
+        fun showStats(setEntity: SetEntity)
     }
 
 }

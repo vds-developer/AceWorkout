@@ -1,8 +1,8 @@
-package vds.developer.aceworkout.data.repository
+package vds.developer.aceworkout.db.repository
 
 import android.app.Application
-import vds.developer.aceworkout.data.database.RepDao
-import vds.developer.aceworkout.data.database.TrainingDataBase
+import vds.developer.aceworkout.db.dao.RepDao
+import vds.developer.aceworkout.db.TrainingDataBase
 
 class RepRepository(app: Application) {
     private val repDao: RepDao = TrainingDataBase.getDataBase(app).repDao()

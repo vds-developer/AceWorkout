@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.data.util
+package vds.developer.aceworkout.db.util
 
 import android.os.Build
 import androidx.annotation.RequiresApi

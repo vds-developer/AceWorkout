@@ -9,10 +9,10 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import vds.developer.aceworkout.R
-import vds.developer.aceworkout.data.entities.Rep
+import vds.developer.aceworkout.db.entities.RepEntity
 
 
-class RepsRecycleView(val reps: List<Rep>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RepsRecycleView(val repEntities: List<RepEntity>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 //    private var reps = trainingDaySetsReps.reps
 
@@ -23,11 +23,11 @@ class RepsRecycleView(val reps: List<Rep>, val repItemListener: RepItemListener)
     }
 
     override fun getItemCount(): Int {
-        return this.reps.size
+        return this.repEntities.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val rep = reps[position]
+        val rep = repEntities[position]
         val viewHolder: RecycleExerciseItemViewHolder = holder as RecycleExerciseItemViewHolder
         viewHolder.repsText.text = rep.reps.toString()
         viewHolder.weightText.text = rep.weight.toString()
@@ -43,8 +43,8 @@ class RepsRecycleView(val reps: List<Rep>, val repItemListener: RepItemListener)
     }
 
     interface RepItemListener {
-        fun onEditRepButtonClick(rep: Rep)
-        fun onDeleteRepButtonClick(rep: Rep)
+        fun onEditRepButtonClick(repEntity: RepEntity)
+        fun onDeleteRepButtonClick(repEntity: RepEntity)
     }
 
     class RecycleExerciseItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
