@@ -13,7 +13,8 @@ import vds.developer.aceworkout.R
 import vds.developer.aceworkout.pages.addSet.AddSetActivity
 
 class TrainingPageViewPagerAdapter(val context: Context,
-                                   private val trainingDaySetsReps: MutableList<TrainingFragmentViewModel.TrainingDaySetsReps>,
+                                   private var trainingDaySetsReps: MutableList<TrainingFragmentViewModel.TrainingDaySetsReps>,
+                                   private val trainingFragmentViewModel: TrainingFragmentViewModel,
                                    private val setItemListener: TrainingDayRecycleView.TrainingSetItemListener,
                                    private val repItemListener: RepsRecycleView.RepItemListener
 ) :
@@ -22,6 +23,11 @@ class TrainingPageViewPagerAdapter(val context: Context,
     private var hasData: Boolean = false
     private lateinit var parent: ViewGroup
     private var currentPageIndex: Int = 0;
+
+    fun setData(trainingDaySetsReps: MutableList<TrainingFragmentViewModel.TrainingDaySetsReps>) {
+        this.trainingDaySetsReps = trainingDaySetsReps
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingPageViewHolder {
 
@@ -32,8 +38,8 @@ class TrainingPageViewPagerAdapter(val context: Context,
     }
 
     override fun getItemCount(): Int {
-        if (trainingDaySetsReps.size > 0) return Int.MAX_VALUE
-        else return 0
+        return if (trainingDaySetsReps.size > 0) Int.MAX_VALUE
+        else 0
     }
 
     override fun onBindViewHolder(holder: TrainingPageViewHolder, position: Int) {
@@ -45,6 +51,7 @@ class TrainingPageViewPagerAdapter(val context: Context,
 //        var trainingDay = training.value
 //        var newPosition = position % trainingDaySetsReps.size
 //        val currentPosition = position % trainingDaySetsReps.size
+
         hasData = trainingDaySetsReps.isNotEmpty() &&
                 trainingDaySetsReps.size > position &&
                 trainingDaySetsReps[position].repEntities != null
@@ -52,8 +59,12 @@ class TrainingPageViewPagerAdapter(val context: Context,
         if (hasData) {
             holder.trainingDayRecyclerView.visibility = View.VISIBLE
             holder.noDataText.visibility = View.GONE
-            holder.trainingDayRecyclerView.adapter =
-                    TrainingDayRecycleView(trainingDaySetsReps[position], setItemListener, repItemListener)
+            if (holder.trainingDayRecyclerView.adapter == null ) {
+                holder.trainingDayRecyclerView.adapter =
+                        TrainingDayRecycleView(trainingDaySetsReps[position], setItemListener, repItemListener)
+            } else {
+                (holder.trainingDayRecyclerView.adapter as TrainingDayRecycleView).updateData(trainingDaySetsReps[position])
+            }
         } else {
             holder.trainingDayRecyclerView.visibility = View.GONE
             holder.noDataText.visibility = View.VISIBLE

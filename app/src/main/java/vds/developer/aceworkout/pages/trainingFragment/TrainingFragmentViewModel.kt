@@ -6,7 +6,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import vds.developer.aceworkout.db.entities.ExerciseEntity
 import vds.developer.aceworkout.db.entities.RepEntity
@@ -36,10 +35,11 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
 
     private var trainingDayRepository: TrainingDayRepository = TrainingDayRepository(application)
     var date: LocalDate
-    var isLoading: Boolean = false
+    var currentPosition : Int = 0
+    var isUpdating: Boolean = false
 
     init {
-        this.date = LocalDate.now()
+        this.date = LocalDate.now().plusDays(1)
         update()
 
 //        trainingDayRepsSets.value = TrainingDaySetsReps(
@@ -72,7 +72,9 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
 //    }
 
     private fun update() {
+        isUpdating = true
         viewModelScope.launch {
+            rawData = mutableListOf()
 //                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // initialize current training day
             val allTrainingDay = trainingDayRepository.getAllTrainingDay()
@@ -98,24 +100,28 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
                     }
 
                     currentTrainingDayEntity?.let {
-                        if (rawData.filter { t -> t.trainingDayEntity.trainingDayId == it.trainingDayId }.isEmpty()) {
+//                        if (rawData.filter { t -> t.trainingDayEntity.trainingDayId == it.trainingDayId }.isEmpty()) {
                             rawData.add(
                                     TrainingDaySetsReps(
                                             currentTrainingDayEntity!!,
                                             setsForCurrentTrainingDay,
                                             repsForCurrentSet?.toList(),
                                             exerciseEntities?.toList()))
-//                                    trainingDayRepsSets.postValue(rawData)
-                        }
+
+//                        }
                     }
                 }
+
+
             }
             if (rawData.isNotEmpty()) {
                 rawData.sortBy {
                     it.trainingDayEntity.dateTime.localDate
                 }
             }
-            trainingDayRepsSets.value = rawData
+            trainingDayRepsSets.postValue(rawData)
+            isUpdating = false
+
         }
     }
 
@@ -125,7 +131,7 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
         setsForCurrentTrainingDay = null
         repsForCurrentSet = null
         exerciseEntities = null
-        isLoading = true
+        isUpdating = true
 
         viewModelScope.launch {
 //                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -165,7 +171,7 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
                 }
 //                        }
             }
-            isLoading = false
+            isUpdating = false
         }
         if (trainingDayRepsSets.value!!.isNotEmpty()) {
             trainingDayRepsSets.value!!.sortBy {
@@ -187,6 +193,10 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
 
     }
 
+//    fun <T> MutableLiveData<T>.notifyObserver() {
+//        this.value = this.value
+//    }
+
     fun addRep(repEntity: RepEntity): Boolean {
 //        viewModelScope.launch {
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -198,8 +208,10 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
             if (model.repEntities == null) model.repEntities = emptyList()
             val newReps = model.repEntities!!.toMutableList()
             isSuccess = newReps.add(repEntity)
+//            trainingDayRepsSets.notifyObserver()
             viewModelScope.launch {
                 trainingDayRepository.insertRep(repEntity)
+                update()
             }
         }
         return isSuccess

@@ -80,14 +80,24 @@ class TrainingFragment : Fragment(),
 //        }
 //        trainingViewPager.setCurrentItem(currentPage, false)
 
-
+//        trainingViewPager.registerOnPageChangeCallback(pageChangeCallback)
         trainingFragmentViewModel.trainingDayRepsSets.let { data ->
             data.observe(
                     this, androidx.lifecycle.Observer {
-                trainingViewPager.adapter = TrainingPageViewPagerAdapter(this.requireContext(), it, this, this)
-//                swipeLayout.isRefreshing = false
-                trainingViewPager.registerOnPageChangeCallback(pageChangeCallback)
-//                trainingViewPager.offscreenPageLimit = 1;
+//                (trainingViewPager.adapter as TrainingPageViewPagerAdapter).setData(it)
+                if (trainingViewPager.adapter == null ) {
+                    trainingViewPager.adapter = TrainingPageViewPagerAdapter(
+                            this.requireContext(),
+                            trainingFragmentViewModel.trainingDayRepsSets.value!!,
+                            trainingFragmentViewModel,
+                            this,
+                            this)
+                } else {
+                    (trainingViewPager.adapter as TrainingPageViewPagerAdapter).setData(it)
+                }
+
+
+
             })
         }
 //        Log.i("info","Postition" + currentPage.toString())
@@ -117,6 +127,19 @@ class TrainingFragment : Fragment(),
 //            }
 //
 //            trainingViewPager.setCurrentItem(currentPage, false)
+//            if (trainingFragmentViewModel.isUpdating) {
+//                trainingFragmentViewModel.isUpdating = false
+//                var currentIndex = 0
+//                for(i in
+//                trainingFragmentViewModel.trainingDayRepsSets.value!!.indices){
+//                    if(trainingFragmentViewModel.trainingDayRepsSets.value!![i].trainingDayEntity.dateTime.localDate == trainingFragmentViewModel.date) {
+//                        currentIndex = i
+//                        break
+//                    }
+//                }
+//            }
+            if (!trainingFragmentViewModel.isUpdating)  trainingFragmentViewModel.currentPosition = position
+
             Log.i("info", "Postition" + position.toString())
             Toast.makeText(context.getContext(), position.toString(), Toast.LENGTH_SHORT).show()
         }
@@ -130,6 +153,7 @@ class TrainingFragment : Fragment(),
     private fun showAddRep(setEntity: SetEntity) {
         val addSetDialog = RepDialog(setEntity, trainingFragmentViewModel)
         fragmentManager?.let { addSetDialog.show(it, null) }
+//        trainingViewPager.adapter!!.notifyItemChanged(0)
 
     }
 

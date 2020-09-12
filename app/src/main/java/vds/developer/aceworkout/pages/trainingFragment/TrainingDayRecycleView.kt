@@ -11,12 +11,17 @@ import vds.developer.aceworkout.db.entities.SetEntity
 
 
 class TrainingDayRecycleView(
-        val trainingDaySetsReps: TrainingFragmentViewModel.TrainingDaySetsReps,
+        var trainingDaySetsReps: TrainingFragmentViewModel.TrainingDaySetsReps,
         val setItemListener: TrainingSetItemListener,
         val repItemListener: RepsRecycleView.RepItemListener
 ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var sets = trainingDaySetsReps.setEntities
+
+    fun updateData(trainingDaySetsReps: TrainingFragmentViewModel.TrainingDaySetsReps) {
+        this.trainingDaySetsReps = trainingDaySetsReps
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rootView = LayoutInflater.from(parent.context)
@@ -41,7 +46,8 @@ class TrainingDayRecycleView(
             setItemListener.showStats(set)
 
         }
-        viewHolder.setsRecyclerView.adapter = RepsRecycleView(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId }, repItemListener)
+        viewHolder.setsRecyclerView.adapter =
+                RepsRecycleView(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId }, repItemListener)
 
 
     }
