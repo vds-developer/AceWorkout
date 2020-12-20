@@ -50,9 +50,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerDivider"
         tools:itemCount="5"
-        tools:listitem="@layout/single_rep">
+        tools:listitem="@layout/item_single_rep">
 
-        <!--        <include layout="@layout/add_rep_template" />-->
+        <!--        <include layout="@layout/dialog_rep" />-->
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.button.MaterialButton

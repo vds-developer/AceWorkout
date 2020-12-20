@@ -5,19 +5,19 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.add_set_exercise_activity.*
+import kotlinx.android.synthetic.main.activity_select_exercise.*
 import vds.developer.aceworkout.R
 import vds.developer.aceworkout.db.entities.SetEntity
 import vds.developer.aceworkout.models.ViewModelFactory
 import vds.developer.aceworkout.models.ViewModelsEnum
 
-class SelectWorkout : AppCompatActivity(), SelectWorkoutRecyclerView.AddSetListener {
-    private lateinit var selectWorkoutViewModel: SelectWorkoutViewModel
+class SelectExerciseActivity : AppCompatActivity(), SelectExerciseRecyclerView.AddSetListener {
+    private lateinit var selectWorkoutViewModel: SelectExerciseViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.add_set_exercise_activity)
+        setContentView(R.layout.activity_select_exercise)
         topAppBar.setNavigationOnClickListener {
             onBackPressed()
         }
@@ -30,13 +30,13 @@ class SelectWorkout : AppCompatActivity(), SelectWorkoutRecyclerView.AddSetListe
 
 
         selectWorkoutViewModel = ViewModelProvider(this, ViewModelFactory(application = this.application, viewModelEnum = ViewModelsEnum.SelectWorkout))
-                .get(SelectWorkoutViewModel::class.java)
+                .get(SelectExerciseViewModel::class.java)
 
         selectWorkoutViewModel.updateFilter(bodyPart)
 
         selectWorkoutViewModel.exerciseEntity.observe(
                 this, androidx.lifecycle.Observer {
-            recyclerExerciseList.adapter = SelectWorkoutRecyclerView(it, trainingDayId, this)
+            recyclerExerciseList.adapter = SelectExerciseRecyclerView(it, trainingDayId, this)
         }
         )
 

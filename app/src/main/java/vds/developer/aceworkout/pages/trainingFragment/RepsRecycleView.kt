@@ -12,14 +12,19 @@ import vds.developer.aceworkout.R
 import vds.developer.aceworkout.db.entities.RepEntity
 
 
-class RepsRecycleView(val repEntities: List<RepEntity>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RepsRecycleView(var repEntities: List<RepEntity>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 //    private var reps = trainingDaySetsReps.reps
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rootView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.single_rep, parent, false)
+                .inflate(R.layout.item_single_rep, parent, false)
         return RecycleExerciseItemViewHolder(rootView)
+    }
+
+    fun updateData(repEntities: List<RepEntity>) {
+        this.repEntities = repEntities
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

@@ -29,7 +29,7 @@ class SummaryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.summary_fragment, container, false)
+        val view = inflater.inflate(R.layout.fragment_summary, container, false)
         radarChart = view.findViewById<View>(R.id.chart_summaryFragment_radarChart) as RadarChart
         numberDaysTrained = view.findViewById<View>(R.id.total_days_trained_number) as TextView
         numberDaysTrained!!.bringToFront()

@@ -20,7 +20,7 @@ class TrainingRecycleView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.exercise_item, parent, false)
+                .inflate(R.layout.item_select_exercise, parent, false)
         return ViewHolder(view)
     }
 
@@ -41,7 +41,7 @@ class TrainingRecycleView
         private val textView: TextView
 
         init {
-            textView = view.findViewById<View>(R.id.row_item) as TextView
+            textView = view.findViewById<View>(R.id.exerciseItem) as TextView
         }
     }
 }

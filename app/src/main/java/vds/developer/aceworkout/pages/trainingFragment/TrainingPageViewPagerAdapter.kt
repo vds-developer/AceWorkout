@@ -22,7 +22,6 @@ class TrainingPageViewPagerAdapter(val context: Context,
 
     private var hasData: Boolean = false
     private lateinit var parent: ViewGroup
-    private var currentPageIndex: Int = 0;
 
     fun setData(trainingDaySetsReps: MutableList<TrainingFragmentViewModel.TrainingDaySetsReps>) {
         this.trainingDaySetsReps = trainingDaySetsReps
@@ -32,7 +31,7 @@ class TrainingPageViewPagerAdapter(val context: Context,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingPageViewHolder {
 
         var trainingPageView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.training_day_page, parent, false)
+                .inflate(R.layout.activity_training_day, parent, false)
         this.parent = parent
         return TrainingPageViewHolder(trainingPageView, hasData)
     }
@@ -69,6 +68,7 @@ class TrainingPageViewPagerAdapter(val context: Context,
             holder.trainingDayRecyclerView.visibility = View.GONE
             holder.noDataText.visibility = View.VISIBLE
         }
+
         holder.addWorkout.setOnClickListener {
             val intent = Intent(parent.context, AddSetActivity::class.java)
             intent.putExtra("trainingDayId", trainingDaySetsReps[position].trainingDayEntity.trainingDayId)

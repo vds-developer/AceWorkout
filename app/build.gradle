@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 
+
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -21,8 +22,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     repositories {
         maven { url 'https://jitpack.io' }
+    }
+
+    dataBinding {
+        enabled true
     }
 }
 

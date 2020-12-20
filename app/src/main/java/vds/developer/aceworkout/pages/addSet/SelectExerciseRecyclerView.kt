@@ -12,12 +12,12 @@ import vds.developer.aceworkout.R
 import vds.developer.aceworkout.db.entities.ExerciseEntity
 import vds.developer.aceworkout.db.entities.SetEntity
 
-class SelectWorkoutRecyclerView(var exerciseEntities: List<ExerciseEntity>, internal var trainingDayId: Long, var addSetListener: AddSetListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SelectExerciseRecyclerView(var exerciseEntities: List<ExerciseEntity>, internal var trainingDayId: Long, var addSetListener: AddSetListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var parent: ViewGroup
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val rootView = LayoutInflater.from(parent.context).inflate(R.layout.add_set_exercise_holder, parent, false)
+        val rootView = LayoutInflater.from(parent.context).inflate(R.layout.item_select_exercise, parent, false)
         this.parent = parent
 
         return WorkoutViewHolder(rootView)

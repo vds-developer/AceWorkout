@@ -25,7 +25,7 @@ class TrainingDayRecycleView(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rootView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.training_set, parent, false)
+                .inflate(R.layout.item_training_set, parent, false)
         return RecycleTrainingSetViewHolder(rootView)
     }
 
@@ -46,8 +46,14 @@ class TrainingDayRecycleView(
             setItemListener.showStats(set)
 
         }
-        viewHolder.setsRecyclerView.adapter =
-                RepsRecycleView(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId }, repItemListener)
+
+        if ( viewHolder.setsRecyclerView.adapter == null ) {
+            viewHolder.setsRecyclerView.adapter =
+                    RepsRecycleView(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId }, repItemListener)
+        } else {
+            (viewHolder.setsRecyclerView.adapter as RepsRecycleView).updateData(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId } )
+        }
+
 
 
     }

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import kotlinx.android.synthetic.main.add_rep_template.*
+import kotlinx.android.synthetic.main.dialog_rep.*
 import vds.developer.aceworkout.db.entities.RepEntity
 import vds.developer.aceworkout.db.entities.SetEntity
 import vds.developer.aceworkout.pages.trainingFragment.TrainingFragmentViewModel
@@ -38,7 +38,7 @@ class RepDialog() : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.add_rep_template, container, false)
+        return inflater.inflate(R.layout.dialog_rep, container, false)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

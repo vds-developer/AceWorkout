@@ -182,7 +182,7 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
 
 
     fun refresh() {
-        update(date)
+        update()
     }
 
     fun addTrainingDay() {
@@ -238,6 +238,10 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
             val modifyRep = model.repEntities!!.toMutableList()
             val removeRep = modifyRep.stream().filter { rep -> rep.repId == repId }.findFirst().orElse(RepEntity(0, 0, -1, 0.0, 0, 0))
             isSuccess = modifyRep.remove(removeRep)
+            viewModelScope.launch {
+                trainingDayRepository.deleteRep(repEntity)
+                update()
+            }
         }
         return isSuccess
 
@@ -269,4 +273,8 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
 //        return trainingList.value!![index].date
 //    }
 
+
+    data class TrainingFragmentViewModelData(var date: LocalDate) {
+
+    }
 }

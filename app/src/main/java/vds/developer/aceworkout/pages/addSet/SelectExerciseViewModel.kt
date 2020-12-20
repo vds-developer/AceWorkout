@@ -9,7 +9,7 @@ import vds.developer.aceworkout.db.entities.SetEntity
 import vds.developer.aceworkout.db.repository.ExerciseRepository
 import vds.developer.aceworkout.db.repository.SetRepository
 
-class SelectWorkoutViewModel(app: Application) : AndroidViewModel(app) {
+class SelectExerciseViewModel(app: Application) : AndroidViewModel(app) {
     lateinit var exerciseEntity: LiveData<List<ExerciseEntity>>
     private var exerciseRepository: ExerciseRepository = ExerciseRepository(app)
     private var setRepository: SetRepository = SetRepository(app)

@@ -39,7 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bodyPartTitle"
         tools:itemCount="5"
-        tools:listitem="@layout/add_set_body_part_holder" />
+        tools:listitem="@layout/item_body_part" />
 
     <TextView
         android:id="@+id/bodyPartDescription"

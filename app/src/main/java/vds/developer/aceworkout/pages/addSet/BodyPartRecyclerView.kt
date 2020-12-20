@@ -20,7 +20,7 @@ class BodyPartRecyclerView(internal val trainingDayId: Long) : RecyclerView.Adap
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rootView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.add_set_body_part_holder, parent, false)
+                .inflate(R.layout.item_body_part, parent, false)
         this.parent = parent
         return BodyPartViewHolder(rootView)
 
@@ -52,7 +52,7 @@ class BodyPartRecyclerView(internal val trainingDayId: Long) : RecyclerView.Adap
             it.description.text = description
             it.title.text = title
             it.card.setOnClickListener {
-                val intent = Intent(parent.context, SelectWorkout::class.java)
+                val intent = Intent(parent.context, SelectExerciseActivity::class.java)
                 intent.putExtra("bodyPart", bodyParts[position].name)
                 intent.putExtra("trainingDayId", trainingDayId)
                 startActivity(parent.context, intent, null)
