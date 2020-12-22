@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.pages.trainingFragment
+package vds.developer.aceworkout.activity.trainingday.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -10,13 +10,14 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import vds.developer.aceworkout.R
-import vds.developer.aceworkout.pages.addSet.AddSetActivity
+import vds.developer.aceworkout.activity.addset.SelectBodyPartActivity
+import vds.developer.aceworkout.activity.trainingday.viewmodel.TrainingFragmentViewModel
 
 class TrainingPageViewPagerAdapter(val context: Context,
                                    private var trainingDaySetsReps: MutableList<TrainingFragmentViewModel.TrainingDaySetsReps>,
                                    private val trainingFragmentViewModel: TrainingFragmentViewModel,
-                                   private val setItemListener: TrainingDayRecycleView.TrainingSetItemListener,
-                                   private val repItemListener: RepsRecycleView.RepItemListener
+                                   private val setItemListener: TrainingDayRecycleViewAdapter.TrainingSetItemListener,
+                                   private val repItemListener: RepsRecycleViewAdapter.RepItemListener
 ) :
         RecyclerView.Adapter<TrainingPageViewPagerAdapter.TrainingPageViewHolder>() {
 
@@ -42,27 +43,17 @@ class TrainingPageViewPagerAdapter(val context: Context,
     }
 
     override fun onBindViewHolder(holder: TrainingPageViewHolder, position: Int) {
-//        if(position < currentPageIndex ) {
-//
-//        }else {
-//
-//        }
-//        var trainingDay = training.value
-//        var newPosition = position % trainingDaySetsReps.size
-//        val currentPosition = position % trainingDaySetsReps.size
-
         hasData = trainingDaySetsReps.isNotEmpty() &&
                 trainingDaySetsReps.size > position &&
                 trainingDaySetsReps[position].repEntities != null
-//        hasData = true
         if (hasData) {
             holder.trainingDayRecyclerView.visibility = View.VISIBLE
             holder.noDataText.visibility = View.GONE
             if (holder.trainingDayRecyclerView.adapter == null ) {
                 holder.trainingDayRecyclerView.adapter =
-                        TrainingDayRecycleView(trainingDaySetsReps[position], setItemListener, repItemListener)
+                        TrainingDayRecycleViewAdapter(trainingDaySetsReps[position], setItemListener, repItemListener)
             } else {
-                (holder.trainingDayRecyclerView.adapter as TrainingDayRecycleView).updateData(trainingDaySetsReps[position])
+                (holder.trainingDayRecyclerView.adapter as TrainingDayRecycleViewAdapter).updateData(trainingDaySetsReps[position])
             }
         } else {
             holder.trainingDayRecyclerView.visibility = View.GONE
@@ -70,7 +61,7 @@ class TrainingPageViewPagerAdapter(val context: Context,
         }
 
         holder.addWorkout.setOnClickListener {
-            val intent = Intent(parent.context, AddSetActivity::class.java)
+            val intent = Intent(parent.context, SelectBodyPartActivity::class.java)
             intent.putExtra("trainingDayId", trainingDaySetsReps[position].trainingDayEntity.trainingDayId)
             startActivity(parent.context, intent, null)
         }

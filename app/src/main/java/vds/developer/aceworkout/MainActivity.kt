@@ -6,7 +6,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
-import vds.developer.aceworkout.pages.trainingFragment.TrainingFragment
+import vds.developer.aceworkout.activity.trainingday.TrainingFragment
 
 class MainActivity : AppCompatActivity() {
 

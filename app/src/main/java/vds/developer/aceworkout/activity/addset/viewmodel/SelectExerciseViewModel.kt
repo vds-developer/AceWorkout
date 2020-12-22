@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.pages.addSet
+package vds.developer.aceworkout.activity.addset.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

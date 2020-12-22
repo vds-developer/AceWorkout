@@ -9,7 +9,10 @@ interface RepDao {
     suspend fun getAllRep(): List<RepEntity>
 
     @Query("select * from Rep where setId = :setId ORDER BY repId")
-    suspend fun getAllRepBySet(setId: Long): List<RepEntity>
+    suspend fun getAllRepBySets(setId: Long): List<RepEntity>
+
+    @Query("select * from Rep where setId in (:setId) ORDER BY repId")
+    suspend fun getAllRepBySets(setId: List<Long>): List<RepEntity>
 
     @Query("select * from Rep where exerciseId = :exerciseId ORDER BY repId")
     suspend fun getAllRepsByExercise(exerciseId: Long): List<RepEntity>

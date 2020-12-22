@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.pages.trainingFragment
+package vds.developer.aceworkout.activity.trainingday.adapter
 
 
 import android.view.LayoutInflater
@@ -12,9 +12,7 @@ import vds.developer.aceworkout.R
 import vds.developer.aceworkout.db.entities.RepEntity
 
 
-class RepsRecycleView(var repEntities: List<RepEntity>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-//    private var reps = trainingDaySetsReps.reps
+class RepsRecycleViewAdapter(var repEntities: List<RepEntity>, val repItemListener: RepItemListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rootView = LayoutInflater.from(parent.context)

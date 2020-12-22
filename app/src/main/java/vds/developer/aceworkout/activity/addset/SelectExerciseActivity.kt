@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.pages.addSet
+package vds.developer.aceworkout.activity.addset
 
 import android.os.Bundle
 import android.util.Log
@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_select_exercise.*
 import vds.developer.aceworkout.R
+import vds.developer.aceworkout.activity.addset.adapter.SelectExerciseRecyclerViewAdapter
+import vds.developer.aceworkout.activity.addset.viewmodel.SelectExerciseViewModel
 import vds.developer.aceworkout.db.entities.SetEntity
 import vds.developer.aceworkout.models.ViewModelFactory
 import vds.developer.aceworkout.models.ViewModelsEnum
 
-class SelectExerciseActivity : AppCompatActivity(), SelectExerciseRecyclerView.AddSetListener {
+class SelectExerciseActivity : AppCompatActivity(), SelectExerciseRecyclerViewAdapter.AddSetListener {
     private lateinit var selectWorkoutViewModel: SelectExerciseViewModel
 
 
@@ -36,7 +38,7 @@ class SelectExerciseActivity : AppCompatActivity(), SelectExerciseRecyclerView.A
 
         selectWorkoutViewModel.exerciseEntity.observe(
                 this, androidx.lifecycle.Observer {
-            recyclerExerciseList.adapter = SelectExerciseRecyclerView(it, trainingDayId, this)
+            recyclerExerciseList.adapter = SelectExerciseRecyclerViewAdapter(it, trainingDayId, this)
         }
         )
 

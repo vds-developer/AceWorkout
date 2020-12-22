@@ -1,4 +1,4 @@
-package vds.developer.aceworkout
+package vds.developer.aceworkout.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.dialog_rep.*
+import vds.developer.aceworkout.R
+import vds.developer.aceworkout.REPS
+import vds.developer.aceworkout.WEIGHT
 import vds.developer.aceworkout.db.entities.RepEntity
 import vds.developer.aceworkout.db.entities.SetEntity
-import vds.developer.aceworkout.pages.trainingFragment.TrainingFragmentViewModel
+import vds.developer.aceworkout.activity.trainingday.viewmodel.TrainingFragmentViewModel
 
 class RepDialog() : DialogFragment() {
 

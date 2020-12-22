@@ -26,6 +26,10 @@ class TrainingDayRepository(val app: Application) {
         }
     }
 
+    suspend fun getLast30DayTrainingDay(date: LocalDate): List<TrainingDayEntity> {
+        return trainingDayDao.getTrainingDayLast30Days(date.minusDays(30))
+    }
+
     suspend fun getTrainingDay(date: LocalDate): TrainingDayEntity {
         return trainingDayDao.getTrainingDayByDate(date)
     }
@@ -35,15 +39,27 @@ class TrainingDayRepository(val app: Application) {
     }
 
     suspend fun getSetsByTrainingDayId(trainingId: Long): List<SetEntity> {
-        return setDao.getSetByTrainingDayId(trainingId)
+        return setDao.getSetByTrainingDayIds(trainingId)
+    }
+
+    suspend fun getSetsByTrainingDayIds(trianingIds: List<Long>):List<SetEntity> {
+        return setDao.getSetByTrainingDayIds(trianingIds)
     }
 
     suspend fun getRepsBySetId(setId: Long): List<RepEntity> {
-        return repDao.getAllRepBySet(setId)
+        return repDao.getAllRepBySets(setId)
+    }
+
+    suspend fun getRepsBySetIds(setId: List<Long>) : List<RepEntity> {
+        return repDao.getAllRepBySets(setId)
     }
 
     suspend fun getExerciseById(exerciseId: Long): ExerciseEntity {
         return exerciseDao.getExerciseById(exerciseId)
+    }
+
+    suspend fun getExerciseByIds(exerciseIds: List<Long>): List<ExerciseEntity> {
+        return exerciseDao.getExerciseByIds(exerciseIds)
     }
 
     suspend fun insertRep(repEntity: RepEntity) {

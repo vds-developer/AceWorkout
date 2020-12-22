@@ -22,6 +22,9 @@ interface ExerciseDao {
     @Query("select * from Exercise where exerciseId = :exerciseId")
     suspend fun getExerciseById(exerciseId: Long): ExerciseEntity
 
+    @Query("select * from Exercise where exerciseId in (:exerciseId)")
+    suspend fun getExerciseByIds(exerciseId: List<Long>): List<ExerciseEntity>
+
     @Insert
     suspend fun addExercise(exerciseEntity: ExerciseEntity)
 

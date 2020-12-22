@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.pages.trainingFragment
+package vds.developer.aceworkout.dialog
 
 import android.graphics.Color
 import android.os.Bundle

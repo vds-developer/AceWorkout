@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.pages.addSet
+package vds.developer.aceworkout.activity.addset.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import vds.developer.aceworkout.R
 import vds.developer.aceworkout.db.entities.ExerciseEntity
 import vds.developer.aceworkout.db.entities.SetEntity
 
-class SelectExerciseRecyclerView(var exerciseEntities: List<ExerciseEntity>, internal var trainingDayId: Long, var addSetListener: AddSetListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SelectExerciseRecyclerViewAdapter(var exerciseEntities: List<ExerciseEntity>, internal var trainingDayId: Long, var addSetListener: AddSetListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var parent: ViewGroup
 
 

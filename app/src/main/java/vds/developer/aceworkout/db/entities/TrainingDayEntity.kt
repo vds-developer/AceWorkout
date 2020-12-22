@@ -9,7 +9,6 @@ import androidx.room.PrimaryKey
 data class TrainingDayEntity(
         @PrimaryKey(autoGenerate = true)
         val trainingDayId: Long,
-
         val numberOfSets: Int,
 
         @Embedded

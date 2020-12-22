@@ -11,8 +11,8 @@ class DataGenerator {
         fun getTrainingDay(): List<TrainingDayEntity> {
             return listOf(
                     TrainingDayEntity(1, 3, DateTimeEntity(LocalDate.now(), ZonedDateTime.now())),
-                    TrainingDayEntity(2, 3, DateTimeEntity(LocalDate.now().plusDays(1), ZonedDateTime.now().plusDays(1))),
-                    TrainingDayEntity(3, 3, DateTimeEntity(LocalDate.now().plusDays(2), ZonedDateTime.now().plusDays(2)))
+                    TrainingDayEntity(2, 3, DateTimeEntity(LocalDate.now().plusDays(1), ZonedDateTime.now().minusDays(1))),
+                    TrainingDayEntity(3, 3, DateTimeEntity(LocalDate.now().plusDays(2), ZonedDateTime.now().minusDays(2)))
             )
         }
 

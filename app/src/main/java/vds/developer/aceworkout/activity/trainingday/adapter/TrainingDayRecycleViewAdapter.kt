@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.pages.trainingFragment
+package vds.developer.aceworkout.activity.trainingday.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import vds.developer.aceworkout.R
+import vds.developer.aceworkout.activity.trainingday.viewmodel.TrainingFragmentViewModel
 import vds.developer.aceworkout.db.entities.SetEntity
 
 
-class TrainingDayRecycleView(
+class TrainingDayRecycleViewAdapter(
         var trainingDaySetsReps: TrainingFragmentViewModel.TrainingDaySetsReps,
         val setItemListener: TrainingSetItemListener,
-        val repItemListener: RepsRecycleView.RepItemListener
+        val repItemListener: RepsRecycleViewAdapter.RepItemListener
 ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var sets = trainingDaySetsReps.setEntities
@@ -40,7 +41,7 @@ class TrainingDayRecycleView(
         val viewHolder: RecycleTrainingSetViewHolder = holder as RecycleTrainingSetViewHolder
         viewHolder.setName.text = set.setName
         viewHolder.addSetButton.setOnClickListener {
-            setItemListener.onAddTrainingSetButtonClick(set)
+            setItemListener.onAddTrainingRepButtonClick(set)
         }
         viewHolder.setName.setOnClickListener {
             setItemListener.showStats(set)
@@ -49,9 +50,9 @@ class TrainingDayRecycleView(
 
         if ( viewHolder.setsRecyclerView.adapter == null ) {
             viewHolder.setsRecyclerView.adapter =
-                    RepsRecycleView(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId }, repItemListener)
+                    RepsRecycleViewAdapter(trainingDaySetsReps.repEntities !!.filter { rep -> rep.setId == set.setId }, repItemListener)
         } else {
-            (viewHolder.setsRecyclerView.adapter as RepsRecycleView).updateData(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId } )
+            (viewHolder.setsRecyclerView.adapter as RepsRecycleViewAdapter).updateData(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId } )
         }
 
 
@@ -66,7 +67,7 @@ class TrainingDayRecycleView(
     }
 
     interface TrainingSetItemListener {
-        fun onAddTrainingSetButtonClick(setEntity: SetEntity)
+        fun onAddTrainingRepButtonClick(setEntity: SetEntity)
         fun showStats(setEntity: SetEntity)
     }
 

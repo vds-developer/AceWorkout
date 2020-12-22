@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.pages.addSet
+package vds.developer.aceworkout.activity.addset.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import vds.developer.aceworkout.R
 import vds.developer.aceworkout.StringResources
+import vds.developer.aceworkout.activity.addset.SelectExerciseActivity
 import vds.developer.aceworkout.models.BodyPartEnum
 
-class BodyPartRecyclerView(internal val trainingDayId: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SelectBodyPartRecyclerViewAdapter(internal val trainingDayId: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val bodyParts: Array<BodyPartEnum> = BodyPartEnum.values()
     private lateinit var parent: ViewGroup
 

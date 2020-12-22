@@ -12,7 +12,10 @@ interface SetDao {
     suspend fun getAllSet(): List<SetEntity>
 
     @Query("SELECT * FROM `Set` where trainingDayId = :trainingDayId ORDER BY setId")
-    suspend fun getSetByTrainingDayId(trainingDayId: Long): List<SetEntity>
+    suspend fun getSetByTrainingDayIds(trainingDayId: Long): List<SetEntity>
+
+    @Query("SELECT * FROM `Set` WHERE trainingDayId IN (:trainingDayIds) ORDER BY setId")
+    suspend fun getSetByTrainingDayIds(trainingDayIds: List<Long>) : List<SetEntity>
 
     @Query("SELECT * FROM `Set` WHERE exerciseId = :exerciseId ORDER BY setId")
     suspend fun getSetByExerciseId(exerciseId: Long): List<SetEntity>
