@@ -17,7 +17,6 @@ class TrainingDayRecycleViewAdapter(
         val repItemListener: RepsRecycleViewAdapter.RepItemListener
 ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var sets = trainingDaySetsReps.setEntities
 
     fun updateData(trainingDaySetsReps: TrainingFragmentViewModel.TrainingDaySetsReps) {
         this.trainingDaySetsReps = trainingDaySetsReps
@@ -32,12 +31,13 @@ class TrainingDayRecycleViewAdapter(
 
 
     override fun getItemCount(): Int {
-        return sets!!.size
+        return trainingDaySetsReps.setEntities!!.size
     }
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val set = sets!![position]
+
+        val set = trainingDaySetsReps.setEntities!![position]
         val viewHolder: RecycleTrainingSetViewHolder = holder as RecycleTrainingSetViewHolder
         viewHolder.setName.text = set.setName
         viewHolder.addSetButton.setOnClickListener {

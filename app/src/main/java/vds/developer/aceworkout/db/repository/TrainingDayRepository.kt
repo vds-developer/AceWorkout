@@ -69,4 +69,8 @@ class TrainingDayRepository(val app: Application) {
     suspend fun deleteRep(repEntity: RepEntity) {
         repDao.deleteRep(repEntity)
     }
+
+    suspend fun addTrainingDay(trainingDay: TrainingDayEntity) : Long {
+        return trainingDayDao.insertTrainingDaySync(trainingDay)
+    }
 }

@@ -13,8 +13,11 @@ import vds.developer.aceworkout.R
 import vds.developer.aceworkout.StringResources
 import vds.developer.aceworkout.activity.addset.SelectExerciseActivity
 import vds.developer.aceworkout.models.BodyPartEnum
+import java.time.LocalDate
 
-class SelectBodyPartRecyclerViewAdapter(internal val trainingDayId: Long) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SelectBodyPartRecyclerViewAdapter(
+        internal val trainingDayId : Long,
+        internal val trainingDayDate: LocalDate) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val bodyParts: Array<BodyPartEnum> = BodyPartEnum.values()
     private lateinit var parent: ViewGroup
 
@@ -56,6 +59,7 @@ class SelectBodyPartRecyclerViewAdapter(internal val trainingDayId: Long) : Recy
                 val intent = Intent(parent.context, SelectExerciseActivity::class.java)
                 intent.putExtra("bodyPart", bodyParts[position].name)
                 intent.putExtra("trainingDayId", trainingDayId)
+                intent.putExtra("trainingDayDate", trainingDayDate)
                 startActivity(parent.context, intent, null)
             }
         }

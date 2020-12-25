@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.activity_add_set.*
 import vds.developer.aceworkout.R
 import vds.developer.aceworkout.activity.addset.adapter.SelectBodyPartRecyclerViewAdapter
 import vds.developer.aceworkout.activity.addset.viewmodel.AddSetActivityViewModel
+import java.time.LocalDate
 
 class SelectBodyPartActivity : AppCompatActivity() {
     private lateinit var addSetActivityViewModel: AddSetActivityViewModel
@@ -17,8 +18,9 @@ class SelectBodyPartActivity : AppCompatActivity() {
         topAppBar.setNavigationOnClickListener {
             onBackPressed()
         }
-
         var trainingDayId = intent.extras.get("trainingDayId") as Long
-        bodyPartRecyclerView.adapter = SelectBodyPartRecyclerViewAdapter(trainingDayId)
+        var trainingDayDate = intent.extras.get("trainingDayDate") as LocalDate
+
+        bodyPartRecyclerView.adapter = SelectBodyPartRecyclerViewAdapter(trainingDayId, trainingDayDate)
     }
 }

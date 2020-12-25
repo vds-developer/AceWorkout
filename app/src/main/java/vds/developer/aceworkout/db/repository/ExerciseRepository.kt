@@ -8,9 +8,13 @@ import vds.developer.aceworkout.db.entities.ExerciseEntity
 class ExerciseRepository(val app: Application) {
     private val exerciseDao = TrainingDataBase.getDataBase(app).exerciseDao()
 
-//    fun getAllExerciseLiveData(): List<ExerciseEntity> {
-//        return exerciseDao.getAllExerciseLiveData()
-//    }
+    suspend fun getAllExerciseLiveData(): List<ExerciseEntity> {
+        return exerciseDao.getAllExerciseLiveData()
+    }
+
+    suspend fun getAllExerciseByBodyPart(bodyPart : String): List<ExerciseEntity> {
+        return exerciseDao.getAllExerciseByBodyPart(bodyPart)
+    }
 
 
 }

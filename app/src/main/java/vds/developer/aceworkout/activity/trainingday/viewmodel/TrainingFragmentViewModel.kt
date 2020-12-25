@@ -27,6 +27,7 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
 
     private var trainingDayRepository: TrainingDayRepository = TrainingDayRepository(application)
     var currentDate: LocalDate = LocalDate.now()
+    var lastPosition = 0
     private var isUpdating: Boolean = false
 
 
@@ -190,7 +191,12 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
         update()
     }
 
-    fun addTrainingDay() {
+    fun getTrainingDaySetsRepsByDate(date : LocalDate) : TrainingDaySetsReps? {
+        return if ( trainingDayRepsSets.value == null ||
+                trainingDayRepsSets.value !!.filter { e -> e.trainingDayEntity.dateTime.localDate == date }.isEmpty()) null
+        else {
+            trainingDayRepsSets.value!!.filter { e ->  e.trainingDayEntity.dateTime.localDate == date }[0]
+        }
 
     }
 

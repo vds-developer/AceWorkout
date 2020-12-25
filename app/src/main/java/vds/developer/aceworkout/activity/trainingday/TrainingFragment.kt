@@ -52,29 +52,47 @@ class TrainingFragment : Fragment(),
                         viewModelEnum = ViewModelsEnum.TrainingFragment))
                 .get(TrainingFragmentViewModel::class.java)
 
-
-
         trainingViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 trainingFragmentViewModel.trainingDayRepsSets.value.let {
-                    if (it != null) {
-                        if (position > it.size - 1 ) {
-                            trainingFragmentViewModel.setDate(it.last().trainingDayEntity.dateTime.localDate.plusDays(position.toLong() - it.size + 1))
-                        } else {
-                            trainingFragmentViewModel.setDate(it[position].trainingDayEntity.dateTime.localDate)
+                    when {
+                        position == 0  -> {
+                            trainingViewPager.setCurrentItem(Int.MAX_VALUE / 2, false)
+                            trainingFragmentViewModel.lastPosition = Int.MAX_VALUE / 2
                         }
-                        dateText.text = trainingFragmentViewModel.currentDate.toString()
+                        trainingFragmentViewModel.lastPosition == 0 -> {
+                            Log.d("nothing", "nothing to do")
+                            trainingFragmentViewModel.lastPosition = position
+                        }
+                        trainingFragmentViewModel.lastPosition > position -> {
+                            trainingFragmentViewModel.currentDate = trainingFragmentViewModel.currentDate.minusDays(1)
+                            trainingFragmentViewModel.lastPosition = position
+                        }
+                        trainingFragmentViewModel.lastPosition < position -> {
+                            trainingFragmentViewModel.currentDate = trainingFragmentViewModel.currentDate.plusDays(1)
+                            trainingFragmentViewModel.lastPosition = position
+                        }
                     }
-                     }
-
+                    dateText.text = trainingFragmentViewModel.currentDate.toString()
+                }
                 Log.d("void", "The current date is " + trainingFragmentViewModel.currentDate)
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
             }
         })
 
+
+
         trainingFragmentViewModel.trainingDayRepsSets.let { data ->
             data.observe(
-                    this, androidx.lifecycle.Observer {
+                    viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (trainingViewPager.adapter == null ) {
                     trainingViewPager.adapter = TrainingPageViewPagerAdapter(
                             this.requireContext(),
@@ -82,6 +100,7 @@ class TrainingFragment : Fragment(),
                             trainingFragmentViewModel,
                             this,
                             this)
+
                 } else {
                     (trainingViewPager.adapter as TrainingPageViewPagerAdapter).setData(it)
                 }

@@ -11,8 +11,11 @@ import vds.developer.aceworkout.MainActivity
 import vds.developer.aceworkout.R
 import vds.developer.aceworkout.db.entities.ExerciseEntity
 import vds.developer.aceworkout.db.entities.SetEntity
+import java.time.LocalDate
 
-class SelectExerciseRecyclerViewAdapter(var exerciseEntities: List<ExerciseEntity>, internal var trainingDayId: Long, var addSetListener: AddSetListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SelectExerciseRecyclerViewAdapter(var exerciseEntities: List<ExerciseEntity>,
+                                        internal var trainingDayId: Long,
+                                        var addSetListener: AddSetListener ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var parent: ViewGroup
 
 
@@ -21,6 +24,11 @@ class SelectExerciseRecyclerViewAdapter(var exerciseEntities: List<ExerciseEntit
         this.parent = parent
 
         return WorkoutViewHolder(rootView)
+    }
+
+    fun updateExerciseList(exerciseEntities: List<ExerciseEntity>) {
+        this.exerciseEntities = exerciseEntities
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
@@ -33,7 +41,7 @@ class SelectExerciseRecyclerViewAdapter(var exerciseEntities: List<ExerciseEntit
         holder.workoutText.let {
             it.text = exerciseEntities[position].name
             it.setOnClickListener {
-                addSetListener.addSetClick(SetEntity(0, exercise.name, trainingDayId, exercise.exerciseId, 0))
+                addSetListener.addSetClick(SetEntity(0L, exercise.name, trainingDayId, exercise.exerciseId, 0))
                 var intent = Intent(parent.context, MainActivity::class.java)
                 ContextCompat.startActivity(parent.context, intent, null)
             }
@@ -47,5 +55,6 @@ class SelectExerciseRecyclerViewAdapter(var exerciseEntities: List<ExerciseEntit
     interface AddSetListener {
         fun addSetClick(setEntity: SetEntity)
     }
+
 
 }

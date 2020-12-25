@@ -17,7 +17,10 @@ interface TrainingDayDao {
     suspend fun getTrainingDayByDate(date: LocalDate): TrainingDayEntity
 
     @Insert(onConflict = ABORT)
-    suspend fun insertTrainingDay(trainingDayEntity: TrainingDayEntity)
+    suspend fun insertTrainingDayAsync(trainingDayEntity: TrainingDayEntity)
+
+    @Insert(onConflict = ABORT)
+    suspend fun insertTrainingDaySync(trainingDayEntity: TrainingDayEntity) : Long
 
     @Insert(onConflict = ABORT)
     suspend fun insertTrainingDays(trainingDayEntities: List<TrainingDayEntity>)

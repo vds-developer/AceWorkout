@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import vds.developer.aceworkout.db.entities.*
 import vds.developer.aceworkout.db.entities.SetEntity
+import vds.developer.aceworkout.models.BodyPartEnum
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.util.*
@@ -22,7 +23,7 @@ class TrainingDayGenerator {
             var dayEntities: MutableList<TrainingDayEntity> = mutableListOf()
             for (i in 1..size) {
                 var dateTime = DateTimeEntity(LocalDate.now(), ZonedDateTime.now())
-                dayEntities.add(TrainingDayEntity(i.toLong(), numberOfSets = 3, dateTime = dateTime))
+                dayEntities.add(TrainingDayEntity(0L, numberOfSets = 3, dateTime = dateTime))
             }
             return dayEntities.toList()
         }
@@ -31,7 +32,7 @@ class TrainingDayGenerator {
             var setEntities: MutableList<SetEntity> = mutableListOf()
             for (i in 1..size) {
                 for (trainingDay in trainingDayEntities) {
-                    setEntities.add(SetEntity(i.toLong(), "Name $i", trainingDay.trainingDayId, i.toLong(), 5))
+                    setEntities.add(SetEntity(0L, "Name $i", trainingDay.trainingDayId, i.toLong(), 5))
                 }
             }
             return setEntities.toList()
@@ -41,7 +42,7 @@ class TrainingDayGenerator {
             var repEntities: MutableList<RepEntity> = mutableListOf()
             for (i in 1..size) {
                 for (set in sets) {
-                    repEntities.add(RepEntity(i.toLong(), set.setId, i.toLong(), 20.0, 10, 0))
+                    repEntities.add(RepEntity(0L, set.setId, i.toLong(), 20.0, 10, 0))
                 }
             }
             return repEntities.toList()
@@ -50,7 +51,7 @@ class TrainingDayGenerator {
         fun GenerateExercise(size: Int): List<ExerciseEntity> {
             var exerciseEntities: MutableList<ExerciseEntity> = mutableListOf()
             for (i in 1..size) {
-                exerciseEntities.add(ExerciseEntity(i.toLong(), "Exercies $i", "Body part $1", true))
+                exerciseEntities.add(ExerciseEntity(0L, "Exercies $i", BodyPartEnum.Back.name, true))
             }
             return exerciseEntities.toList()
         }

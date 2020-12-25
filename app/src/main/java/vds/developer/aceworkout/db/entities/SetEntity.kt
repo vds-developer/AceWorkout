@@ -18,7 +18,7 @@ data class SetEntity(
         val setId: Long,
         // exercise name
         val setName: String,
-        val trainingDayId: Long,
+        var trainingDayId: Long,
         val exerciseId: Long,
         val numberOfReps: Int
 )
