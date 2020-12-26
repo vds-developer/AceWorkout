@@ -13,5 +13,18 @@ class StringResources {
         val bodyPartNameLegs = "Leg"
         val bodyPartDescriptionLegs = "Leg"
         val bodyPartImageLegs = "Leg"
+
+        val bodyPartNameChest = "Chest"
+        val bodyPartDescriptionChest = "Description Chest"
+
+        val bodyPartNameAbdominal = "Abdominal"
+        val bodyPartDescriptionAbdominal = "Description Abdominal"
+
+        val bodyPartNameShoulders = "Shoulders"
+        val bodyPartDescriptionShoulders = "Description Shoulders"
+
+        val bodyPartNameOthers = "Others"
+        val bodyPartDescriptionOthers = "Description Others"
+
     }
 }

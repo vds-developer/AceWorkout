@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import vds.developer.aceworkout.R
@@ -43,7 +45,7 @@ class TrainingPageViewPagerAdapter(val context: Context,
     }
 
     override fun getItemCount(): Int {
-        return if (trainingDaySetsReps.size > 0) Int.MAX_VALUE
+        return if (trainingDaySetsReps.size >= 0) Int.MAX_VALUE
         else 0
     }
 
@@ -71,12 +73,13 @@ class TrainingPageViewPagerAdapter(val context: Context,
             model = model!!
             holder.trainingDayRecyclerView.visibility = View.VISIBLE
             holder.noDataText.visibility = View.GONE
-            if (holder.trainingDayRecyclerView.adapter == null ) {
-                holder.trainingDayRecyclerView.adapter =
-                        TrainingDayRecycleViewAdapter(model, setItemListener, repItemListener)
-            } else {
-                (holder.trainingDayRecyclerView.adapter as TrainingDayRecycleViewAdapter).updateData(model)
-            }
+               if (holder.trainingDayRecyclerView.adapter == null ) {
+                   holder.trainingDayRecyclerView.adapter =
+                           TrainingDayRecycleViewAdapter(model, setItemListener, repItemListener)
+               } else {
+                   (holder.trainingDayRecyclerView.adapter as TrainingDayRecycleViewAdapter).updateData(model)
+               }
+
         } else {
             holder.trainingDayRecyclerView.visibility = View.GONE
             holder.noDataText.visibility = View.VISIBLE
@@ -84,10 +87,10 @@ class TrainingPageViewPagerAdapter(val context: Context,
 
         holder.addWorkout.setOnClickListener {
             val intent = Intent(parent.context, SelectBodyPartActivity::class.java)
-            if (position > trainingDaySetsReps.size - 1) {
+            if (model == null) {
                 intent.putExtra("trainingDayId", -1L )
             } else {
-                intent.putExtra("trainingDayId", trainingDaySetsReps[position].trainingDayEntity.trainingDayId)
+                intent.putExtra("trainingDayId", model.trainingDayEntity.trainingDayId)
             }
 
             intent.putExtra("trainingDayDate", trainingFragmentViewModel.currentDate )

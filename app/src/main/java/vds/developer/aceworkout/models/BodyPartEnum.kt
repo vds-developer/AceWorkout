@@ -3,6 +3,10 @@ package vds.developer.aceworkout.models
 enum class BodyPartEnum {
     Back,
     Legs,
-    Arms
+    Arms,
+    Chest,
+    Abdominal,
+    Shoulders,
+    Others
 }
 

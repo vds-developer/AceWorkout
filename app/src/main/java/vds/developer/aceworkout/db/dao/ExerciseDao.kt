@@ -1,10 +1,7 @@
 package vds.developer.aceworkout.db.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import vds.developer.aceworkout.db.entities.ExerciseEntity
 
 
@@ -27,6 +24,16 @@ interface ExerciseDao {
 
     @Insert
     suspend fun addExercise(exerciseEntity: ExerciseEntity)
+
+    @Query("Select EXISTS(SELECT * FROM Exercise WHERE name = :exerciseName) ")
+    suspend fun isExist(exerciseName: String) : Boolean
+
+    @Transaction()
+    suspend fun addExerciseIfNotExist(exerciseEntity: ExerciseEntity) {
+        if (!isExist(exerciseName = exerciseEntity.name)) {
+            addExercise(exerciseEntity)
+        }
+    }
 
     @Insert
     suspend fun addExercises(exerciseEntities: List<ExerciseEntity>)

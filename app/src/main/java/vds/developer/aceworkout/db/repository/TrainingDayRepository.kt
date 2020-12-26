@@ -66,6 +66,14 @@ class TrainingDayRepository(val app: Application) {
         repDao.addRep(repEntity)
     }
 
+    suspend fun updateRep(repEntity: RepEntity) {
+        repDao.updateRep(repEntity)
+    }
+
+    suspend fun upsertRep(repEntity: RepEntity) {
+        repDao.upsertRep(repEntity)
+    }
+
     suspend fun deleteRep(repEntity: RepEntity) {
         repDao.deleteRep(repEntity)
     }

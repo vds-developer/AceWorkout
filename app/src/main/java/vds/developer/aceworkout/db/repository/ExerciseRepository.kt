@@ -16,5 +16,9 @@ class ExerciseRepository(val app: Application) {
         return exerciseDao.getAllExerciseByBodyPart(bodyPart)
     }
 
+    suspend fun addExercise(exerciseEntity: ExerciseEntity) {
+        return exerciseDao.addExercise(exerciseEntity)
+    }
+
 
 }

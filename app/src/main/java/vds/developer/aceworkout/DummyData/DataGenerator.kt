@@ -1,4 +1,4 @@
-package vds.developer.aceworkout.db
+package vds.developer.aceworkout.DummyData
 
 import vds.developer.aceworkout.db.entities.*
 import vds.developer.aceworkout.db.entities.SetEntity

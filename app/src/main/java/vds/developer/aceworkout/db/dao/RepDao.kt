@@ -1,7 +1,12 @@
 package vds.developer.aceworkout.db.dao
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.room.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import vds.developer.aceworkout.db.entities.RepEntity
+
 
 @Dao
 interface RepDao {
@@ -25,6 +30,19 @@ interface RepDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addRep(repEntity: RepEntity)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateRep(repEntity: RepEntity)
+
+
+    @Transaction
+    suspend fun upsertRep(repEntity: RepEntity) {
+        try {
+            addRep(repEntity)
+        } catch (exception: SQLiteConstraintException) {
+            updateRep(repEntity)
+        }
+    }
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addReps(repEntity: List<RepEntity>)

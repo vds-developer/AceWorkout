@@ -50,6 +50,22 @@ class SelectBodyPartRecyclerViewAdapter(
                 description = StringResources.bodyPartDescriptionLegs
                 title = StringResources.bodyPartNameLegs
             }
+            BodyPartEnum.Abdominal -> {
+                description = StringResources.bodyPartDescriptionAbdominal
+                title = StringResources.bodyPartNameAbdominal
+            }
+            BodyPartEnum.Chest -> {
+                description = StringResources.bodyPartDescriptionChest
+                title = StringResources.bodyPartNameChest
+            }
+            BodyPartEnum.Shoulders -> {
+                description = StringResources.bodyPartDescriptionShoulders
+                title = StringResources.bodyPartNameShoulders
+            }
+            BodyPartEnum.Others -> {
+                description = StringResources.bodyPartDescriptionOthers
+                title = StringResources.bodyPartNameOthers
+            }
         }
         holder as BodyPartViewHolder
         holder.let {
@@ -67,7 +83,7 @@ class SelectBodyPartRecyclerViewAdapter(
 
     inner class BodyPartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var card: MaterialCardView = itemView.findViewById(R.id.bodyPartCard)
-        var image: ImageView = itemView.findViewById(R.id.bodyPartImage)
+//        var image: ImageView = itemView.findViewById(R.id.bodyPartImage)
         var description: TextView = itemView.findViewById(R.id.bodyPartDescription)
         var title: TextView = itemView.findViewById(R.id.bodyPartTitle)
 

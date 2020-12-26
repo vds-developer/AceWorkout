@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import vds.developer.aceworkout.R
@@ -47,13 +49,14 @@ class TrainingDayRecycleViewAdapter(
             setItemListener.showStats(set)
 
         }
+            if ( viewHolder.setsRecyclerView.adapter == null ) {
+                viewHolder.setsRecyclerView.adapter =
+                        RepsRecycleViewAdapter(trainingDaySetsReps.repEntities !!.filter { rep -> rep.setId == set.setId }, repItemListener)
+            } else {
+                (viewHolder.setsRecyclerView.adapter as RepsRecycleViewAdapter).updateData(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId } )
+            }
 
-        if ( viewHolder.setsRecyclerView.adapter == null ) {
-            viewHolder.setsRecyclerView.adapter =
-                    RepsRecycleViewAdapter(trainingDaySetsReps.repEntities !!.filter { rep -> rep.setId == set.setId }, repItemListener)
-        } else {
-            (viewHolder.setsRecyclerView.adapter as RepsRecycleViewAdapter).updateData(trainingDaySetsReps.repEntities!!.filter { rep -> rep.setId == set.setId } )
-        }
+
 
 
 

@@ -18,9 +18,9 @@ import java.time.LocalDate
 class TrainingFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
     data class TrainingDaySetsReps(var trainingDayEntity: TrainingDayEntity,
-                                   var setEntities: List<SetEntity>?,
-                                   var repEntities: List<RepEntity>?,
-                                   var exerciseEntities: List<ExerciseEntity>?)
+                                   var setEntities: List<SetEntity>,
+                                   var repEntities: List<RepEntity>,
+                                   var exerciseEntities: List<ExerciseEntity>)
 
     private var rawData: MutableList<TrainingDaySetsReps> = mutableListOf()
     var trainingDayRepsSets: MutableLiveData<MutableList<TrainingDaySetsReps>> = MutableLiveData(rawData)
@@ -35,115 +35,115 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
         getLast30Days(currentDate)
     }
 
-    fun setDate(date : LocalDate) {
+    fun setDate(date: LocalDate) {
         this.currentDate = date
     }
 
-    private fun update() {
-        isUpdating = true
-        var setsForCurrentTrainingDay: List<SetEntity>?
-        var repsForCurrentSet: MutableList<RepEntity>? = null
-        var exerciseEntities: MutableList<ExerciseEntity>? = null
-        viewModelScope.launch {
-            rawData = mutableListOf()
-            // initialize current training day
-            val allTrainingDay = trainingDayRepository.getAllTrainingDay()
-            for (currentTrainingDayEntity in allTrainingDay) {
-                currentTrainingDayEntity.let {
-                    // initialize sets for day
-                    setsForCurrentTrainingDay =
-                            trainingDayRepository.getSetsByTrainingDayId(currentTrainingDayEntity.trainingDayId)
+//    private fun update() {
+//        isUpdating = true
+//        var setsForCurrentTrainingDay: List<SetEntity>?
+//        var repsForCurrentSet: MutableList<RepEntity>? = null
+//        var exerciseEntities: MutableList<ExerciseEntity>? = null
+//        viewModelScope.launch {
+//            rawData = mutableListOf()
+//            // initialize current training day
+//            val allTrainingDay = trainingDayRepository.getAllTrainingDay()
+//            for (currentTrainingDayEntity in allTrainingDay) {
+//                currentTrainingDayEntity.let {
+//                    // initialize sets for day
+//                    setsForCurrentTrainingDay =
+//                            trainingDayRepository.getSetsByTrainingDayId(currentTrainingDayEntity.trainingDayId)
+//
+//                    // initialize reps for all sets
+//                    setsForCurrentTrainingDay?.let {
+//                        repsForCurrentSet = mutableListOf<RepEntity>()
+//                        for (setEntity: SetEntity in setsForCurrentTrainingDay !!) {
+//                            repsForCurrentSet!!.addAll(trainingDayRepository.getRepsBySetId(setEntity.setId))
+//                        }
+//
+//                        repsForCurrentSet?.let {
+//                            exerciseEntities = mutableListOf()
+//                            for (repEntity: RepEntity in repsForCurrentSet!!) {
+//                                exerciseEntities!!.add(trainingDayRepository.getExerciseById(repEntity.exerciseId))
+//                            }
+//                        }
+//                    }
+//
+//                    currentTrainingDayEntity.let {
+//                        //                        if (rawData.filter { t -> t.trainingDayEntity.trainingDayId == it.trainingDayId }.isEmpty()) {
+//                        rawData.add(
+//                                TrainingDaySetsReps(
+//                                        currentTrainingDayEntity,
+//                                        setsForCurrentTrainingDay,
+//                                        repsForCurrentSet?.toList(),
+//                                        exerciseEntities?.toList()))
+//                    }
+//                }
+//            }
+//            if (rawData.isNotEmpty()) {
+//                rawData.sortBy {
+//                    it.trainingDayEntity.dateTime.localDate
+//                }
+//            }
+//            trainingDayRepsSets.postValue(rawData)
+//            isUpdating = false
+//
+//        }
+//    }
 
-                    // initialize reps for all sets
-                    setsForCurrentTrainingDay?.let {
-                        repsForCurrentSet = mutableListOf<RepEntity>()
-                        for (setEntity: SetEntity in setsForCurrentTrainingDay !!) {
-                            repsForCurrentSet!!.addAll(trainingDayRepository.getRepsBySetId(setEntity.setId))
-                        }
-
-                        repsForCurrentSet?.let {
-                            exerciseEntities = mutableListOf()
-                            for (repEntity: RepEntity in repsForCurrentSet!!) {
-                                exerciseEntities!!.add(trainingDayRepository.getExerciseById(repEntity.exerciseId))
-                            }
-                        }
-                    }
-
-                    currentTrainingDayEntity.let {
-                        //                        if (rawData.filter { t -> t.trainingDayEntity.trainingDayId == it.trainingDayId }.isEmpty()) {
-                        rawData.add(
-                                TrainingDaySetsReps(
-                                        currentTrainingDayEntity,
-                                        setsForCurrentTrainingDay,
-                                        repsForCurrentSet?.toList(),
-                                        exerciseEntities?.toList()))
-                    }
-                }
-            }
-            if (rawData.isNotEmpty()) {
-                rawData.sortBy {
-                    it.trainingDayEntity.dateTime.localDate
-                }
-            }
-            trainingDayRepsSets.postValue(rawData)
-            isUpdating = false
-
-        }
-    }
-
-    private fun update(date: LocalDate) {
-        isUpdating = true
-        var currentTrainingDayEntity: TrainingDayEntity?
-        var setsForCurrentTrainingDay: List<SetEntity>?
-        var repsForCurrentSet: MutableList<RepEntity>? = null
-        var exerciseEntities: MutableList<ExerciseEntity>? = null
-        viewModelScope.launch {
-            // initialize current training day
-            currentTrainingDayEntity = trainingDayRepository.getTrainingDay(date)
-
-            currentTrainingDayEntity.let {
-                // initialize sets for day
-                setsForCurrentTrainingDay = trainingDayRepository.getSetsByTrainingDayId(currentTrainingDayEntity !!.trainingDayId)
-
-                // initialize reps for all sets
-                setsForCurrentTrainingDay?.let {
-                    repsForCurrentSet = mutableListOf<RepEntity>()
-                    for (setEntity: SetEntity in setsForCurrentTrainingDay!!) {
-                        repsForCurrentSet!!.addAll(trainingDayRepository.getRepsBySetId(setEntity.setId))
-                    }
-
-                    repsForCurrentSet?.let {
-                        exerciseEntities = mutableListOf()
-                        for (repEntity: RepEntity in repsForCurrentSet!!) {
-                            exerciseEntities!!.add(trainingDayRepository.getExerciseById(repEntity.exerciseId))
-                        }
-                    }
-                }
-
-                currentTrainingDayEntity.let {
-                    if (it != null) {
-                        if (trainingDayRepsSets.value!!.filter { t -> t.trainingDayEntity.trainingDayId == it.trainingDayId }.isEmpty()) {
-                            rawData.add(
-                                    TrainingDaySetsReps(
-                                            currentTrainingDayEntity !!,
-                                            setsForCurrentTrainingDay,
-                                            repsForCurrentSet?.toList(),
-                                            exerciseEntities?.toList()))
-                            trainingDayRepsSets.value = rawData
-                            //                                    trainingDayRepsSets.postValue(rawData)
-                        }
-                    }
-                }
-    //                        }
-            }
-            isUpdating = false
-        }
-        if (trainingDayRepsSets.value!!.isNotEmpty()) {
-            trainingDayRepsSets.value!!.sortBy {
-                it.trainingDayEntity.dateTime.localDate
-            }
-        }
-    }
+//    private fun update(date: LocalDate) {
+//        isUpdating = true
+//        var currentTrainingDayEntity: TrainingDayEntity?
+//        var setsForCurrentTrainingDay: List<SetEntity>?
+//        var repsForCurrentSet: MutableList<RepEntity>? = null
+//        var exerciseEntities: MutableList<ExerciseEntity>? = null
+//        viewModelScope.launch {
+//            // initialize current training day
+//            currentTrainingDayEntity = trainingDayRepository.getTrainingDay(date)
+//
+//            currentTrainingDayEntity.let {
+//                // initialize sets for day
+//                setsForCurrentTrainingDay = trainingDayRepository.getSetsByTrainingDayId(currentTrainingDayEntity !!.trainingDayId)
+//
+//                // initialize reps for all sets
+//                setsForCurrentTrainingDay?.let {
+//                    repsForCurrentSet = mutableListOf<RepEntity>()
+//                    for (setEntity: SetEntity in setsForCurrentTrainingDay!!) {
+//                        repsForCurrentSet!!.addAll(trainingDayRepository.getRepsBySetId(setEntity.setId))
+//                    }
+//
+//                    repsForCurrentSet?.let {
+//                        exerciseEntities = mutableListOf()
+//                        for (repEntity: RepEntity in repsForCurrentSet!!) {
+//                            exerciseEntities!!.add(trainingDayRepository.getExerciseById(repEntity.exerciseId))
+//                        }
+//                    }
+//                }
+//
+//                currentTrainingDayEntity.let {
+//                    if (it != null) {
+//                        if (trainingDayRepsSets.value!!.filter { t -> t.trainingDayEntity.trainingDayId == it.trainingDayId }.isEmpty()) {
+//                            rawData.add(
+//                                    TrainingDaySetsReps(
+//                                            currentTrainingDayEntity !!,
+//                                            setsForCurrentTrainingDay,
+//                                            repsForCurrentSet?.toList(),
+//                                            exerciseEntities?.toList()))
+//                            trainingDayRepsSets.value = rawData
+//                            //                                    trainingDayRepsSets.postValue(rawData)
+//                        }
+//                    }
+//                }
+//    //                        }
+//            }
+//            isUpdating = false
+//        }
+//        if (trainingDayRepsSets.value!!.isNotEmpty()) {
+//            trainingDayRepsSets.value!!.sortBy {
+//                it.trainingDayEntity.dateTime.localDate
+//            }
+//        }
+//    }
 
     private fun getLast30Days(date: LocalDate) {
         isUpdating = true
@@ -153,6 +153,8 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
             val sets = trainingDayRepository.getSetsByTrainingDayIds(trainingDayEntities.map { e -> e.trainingDayId }.distinct())
             val reps = trainingDayRepository.getRepsBySetIds(sets.map { e -> e.setId }.distinct())
             val exercise = trainingDayRepository.getExerciseByIds(sets.map { e -> e.exerciseId }.distinct())
+            rawData = mutableListOf()
+            trainingDayRepsSets.value = rawData
 
             for (trainingDay in trainingDayEntities) {
                 val currentSets = sets.let {
@@ -167,16 +169,15 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
                 }
 
                 trainingDayEntities.let {
-                    if (trainingDayRepsSets.value !!.filter { t -> t.trainingDayEntity.trainingDayId == trainingDay.trainingDayId }.isEmpty()) {
                         rawData.add(
                                 TrainingDaySetsReps(
                                         trainingDay,
-                                        currentSets,
+                                        currentSets.toList(),
                                         currentReps.toList(),
-                                        currentExercise.toList()))
+                                        currentExercise.toList())
+                        )
                         trainingDayRepsSets.value = rawData
                     }
-                }
             }
             isUpdating = false
         }
@@ -188,75 +189,45 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
     }
 
     fun refresh() {
-        update()
+        getLast30Days(currentDate)
     }
 
-    fun getTrainingDaySetsRepsByDate(date : LocalDate) : TrainingDaySetsReps? {
-        return if ( trainingDayRepsSets.value == null ||
+    fun getTrainingDaySetsRepsByDate(date: LocalDate): TrainingDaySetsReps? {
+        return if (trainingDayRepsSets.value == null ||
                 trainingDayRepsSets.value !!.filter { e -> e.trainingDayEntity.dateTime.localDate == date }.isEmpty()) null
         else {
-            trainingDayRepsSets.value!!.filter { e ->  e.trainingDayEntity.dateTime.localDate == date }[0]
+            trainingDayRepsSets.value !!.filter { e -> e.trainingDayEntity.dateTime.localDate == date }[0]
         }
 
     }
 
-    fun addSet() {
-
-    }
-
-    fun addRep(repEntity: RepEntity): Boolean {
-//        var isSuccess = false
-//        getTrainingDayByDate(this.currentDate)?.let { model ->
-//            if (model.repEntities == null) model.repEntities = emptyList()
-//            val newReps = model.repEntities!!.toMutableList()
-//            isSuccess = newReps.add(repEntity)
-//            viewModelScope.launch {
-//                trainingDayRepository.insertRep(repEntity)
-//                update()
-//            }
-//        }
-//        return isSuccess
-        return viewModelScope.launch {
-            trainingDayRepository.insertRep(repEntity)
-                update()
+        fun addRep(repEntity: RepEntity): Boolean {
+            return viewModelScope.launch {
+                trainingDayRepository.insertRep(repEntity)
+                getLast30Days(currentDate)
             }.isCompleted
-
-    }
-
-    fun editRep(repEntity: RepEntity): Boolean {
-        var isSuccess = false
-        val repId = repEntity.repId
-        getTrainingDayByDate(this.currentDate)?.let { model ->
-            if (model.repEntities == null) model.repEntities = emptyList()
-            val modifyRep = model.repEntities!!.toMutableList()
-            val removeRep = modifyRep.stream().filter { rep -> rep.repId == repId }.findFirst().orElse(RepEntity(0, 0, -1, 0.0, 0, 0))
-            modifyRep.remove(removeRep)
-            isSuccess = modifyRep.add(repEntity)
         }
-        return isSuccess
-    }
 
-    fun deleteRep(repEntity: RepEntity): Boolean {
-        val repId = repEntity.repId
-        var isSuccess = false
-        getTrainingDayByDate(this.currentDate)?.let { model ->
-            val modifyRep = model.repEntities!!.toMutableList()
-            val removeRep = modifyRep.stream().filter { rep -> rep.repId == repId }.findFirst().orElse(RepEntity(0, 0, -1, 0.0, 0, 0))
-            isSuccess = modifyRep.remove(removeRep)
-            viewModelScope.launch {
+        fun editRep(repEntity: RepEntity): Boolean {
+            return viewModelScope.launch {
+                trainingDayRepository.updateRep(repEntity)
+                getLast30Days(currentDate)
+            }.isCompleted
+        }
+
+        fun deleteRep(repEntity: RepEntity): Boolean {
+            return viewModelScope.launch {
                 trainingDayRepository.deleteRep(repEntity)
-                update()
-            }
+                getLast30Days(currentDate)
+            }.isCompleted
         }
-        return isSuccess
 
-    }
         fun getTrainingDayByDate(searchDate: LocalDate): TrainingDaySetsReps? {
-        if (trainingDayRepsSets.value!!.any { it.trainingDayEntity.dateTime.localDate == searchDate }) {
-            return trainingDayRepsSets.value!!.first { it.trainingDayEntity.dateTime.localDate == searchDate }
+            if (trainingDayRepsSets.value !!.any { it.trainingDayEntity.dateTime.localDate == searchDate }) {
+                return trainingDayRepsSets.value !!.first { it.trainingDayEntity.dateTime.localDate == searchDate }
+            }
+            return null
         }
-        return null
-    }
 
 //
 //    fun getTrainingDay(index : Int): TrainingDayModel {
@@ -278,7 +249,7 @@ class TrainingFragmentViewModel(application: Application) : AndroidViewModel(app
 //    }
 
 
-    data class TrainingFragmentViewModelData(var date: LocalDate) {
+        data class TrainingFragmentViewModelData(var date: LocalDate) {
 
-    }
+        }
 }

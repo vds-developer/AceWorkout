@@ -8,6 +8,8 @@ import androidx.room.TypeConverters
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import vds.developer.aceworkout.DummyData.DataGenerator
+import vds.developer.aceworkout.DummyData.FundamentalExercises
 import vds.developer.aceworkout.db.dao.ExerciseDao
 import vds.developer.aceworkout.db.dao.RepDao
 import vds.developer.aceworkout.db.dao.SetDao
@@ -72,12 +74,18 @@ abstract class TrainingDataBase : RoomDatabase() {
     fun populateInitialData() {
         CoroutineScope(Dispatchers.Default).launch {
             INSTANCE?.let {
-                if (INSTANCE!!.trainingDayDao().count() == 0) {
-                    it.trainingDayDao().insertTrainingDays(DataGenerator.getTrainingDay())
-                    it.exerciseDao().addExercises(DataGenerator.getExercise())
-                    it.setDao().addSets(DataGenerator.getSet())
-                    it.repDao().addReps(DataGenerator.getRep())
+//                if (INSTANCE!!.trainingDayDao().count() == 0) {
+//                    it.trainingDayDao().insertTrainingDays(DataGenerator.getTrainingDay())
+//                    it.exerciseDao().addExercises(DataGenerator.getExercise())
+//                    it.setDao().addSets(DataGenerator.getSet())
+//                    it.repDao().addReps(DataGenerator.getRep())
+//                }
+
+                // Attempt to add preliminary exercise
+                FundamentalExercises.fundamentalExercise.forEach { exercise ->
+                    it.exerciseDao().addExerciseIfNotExist(exercise)
                 }
+
             }
         }
     }
