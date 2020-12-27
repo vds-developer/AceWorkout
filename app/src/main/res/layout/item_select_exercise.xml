@@ -14,11 +14,11 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:paddingStart="64dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:paddingStart="@dimen/padding_2x_large"
+        android:paddingTop="@dimen/padding_large"
+        android:paddingBottom="@dimen/padding_large"
         android:text="@string/exercise"
-        android:textSize="18sp"
+        android:textSize="@dimen/font_size_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

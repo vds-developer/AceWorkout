@@ -32,5 +32,5 @@ interface TrainingDayDao {
     fun count(): Int
 
     @Query("SELECT * FROM TrainingDay WHERE localDate >= :date")
-    suspend fun getTrainingDayLast30Days(date: LocalDate) : List<TrainingDayEntity>
+    suspend fun getTrainingDayAfter(date: LocalDate) : List<TrainingDayEntity>
 }

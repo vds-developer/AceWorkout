@@ -33,13 +33,13 @@ class TrainingDayRecycleViewAdapter(
 
 
     override fun getItemCount(): Int {
-        return trainingDaySetsReps.setEntities!!.size
+        return trainingDaySetsReps.setEntities.size
     }
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        val set = trainingDaySetsReps.setEntities!![position]
+        val set = trainingDaySetsReps.setEntities[position]
         val viewHolder: RecycleTrainingSetViewHolder = holder as RecycleTrainingSetViewHolder
         viewHolder.setName.text = set.setName
         viewHolder.addSetButton.setOnClickListener {

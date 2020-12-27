@@ -14,7 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeWidth="1dp"
         app:strokeColor="@color/blue"
         app:cardElevation="8dp"
         android:clickable="true"
@@ -38,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="@dimen/padding_medium">
 
                 <!-- Title, secondary and supporting text -->
                 <TextView
@@ -52,7 +51,7 @@
                     android:id="@+id/bodyPartDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/margin_large"
                     android:text="@string/description_text"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary" />

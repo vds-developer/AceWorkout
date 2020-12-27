@@ -41,20 +41,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/weeklyProgressView"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton13"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:id="@+id/btn_monday"
+            android:layout_width="@dimen/main_activity_top_button_width"
+            android:layout_height="@dimen/main_activity_top_button_height"
             android:gravity="center"
             android:text="@string/_1"
-            android:textSize="12sp"
+            android:textSize="@dimen/main_activity_top_button_text_font"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/materialButton7"
+            app:layout_constraintEnd_toStartOf="@+id/btn_tuesday"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -62,91 +62,87 @@
         </com.google.android.material.button.MaterialButton>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton7"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:id="@+id/btn_tuesday"
+            android:layout_width="@dimen/main_activity_top_button_width"
+            android:layout_height="@dimen/main_activity_top_button_height"
             android:gravity="center"
             android:text="@string/_1"
-            android:textSize="12sp"
+            android:textSize="@dimen/main_activity_top_button_text_font"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/materialButton8"
+            app:layout_constraintEnd_toStartOf="@+id/btn_wednesday"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/materialButton13"
+            app:layout_constraintStart_toEndOf="@+id/btn_monday"
+            app:layout_constraintTop_toTopOf="parent">
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_wednesday"
+            android:layout_width="@dimen/main_activity_top_button_width"
+            android:layout_height="@dimen/main_activity_top_button_height"
+            android:gravity="center"
+            android:text="@string/_1"
+            android:textSize="@dimen/main_activity_top_button_text_font"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_thursday"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_tuesday"
             app:layout_constraintTop_toTopOf="parent">
 
         </com.google.android.material.button.MaterialButton>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton8"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:id="@+id/btn_thursday"
+            android:layout_width="@dimen/main_activity_top_button_width"
+            android:layout_height="@dimen/main_activity_top_button_height"
             android:gravity="center"
             android:text="@string/_1"
-            android:textSize="12sp"
+            android:textSize="@dimen/main_activity_top_button_text_font"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/materialButton12"
+            app:layout_constraintEnd_toStartOf="@+id/btn_friday"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/materialButton7"
+            app:layout_constraintStart_toEndOf="@+id/btn_wednesday"
             app:layout_constraintTop_toTopOf="parent">
-
         </com.google.android.material.button.MaterialButton>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton9"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:id="@+id/btn_friday"
+            android:layout_width="@dimen/main_activity_top_button_width"
+            android:layout_height="@dimen/main_activity_top_button_height"
             android:gravity="center"
             android:text="@string/_1"
-            android:textSize="12sp"
+            android:textSize="@dimen/main_activity_top_button_text_font"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/materialButton10"
+            app:layout_constraintEnd_toStartOf="@+id/btn_saturday"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/materialButton12"
+            app:layout_constraintStart_toEndOf="@+id/btn_thursday"
             app:layout_constraintTop_toTopOf="parent">
-
         </com.google.android.material.button.MaterialButton>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton12"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:id="@+id/btn_saturday"
+            android:layout_width="@dimen/main_activity_top_button_width"
+            android:layout_height="@dimen/main_activity_top_button_height"
             android:gravity="center"
             android:text="@string/_1"
-            android:textSize="12sp"
+            android:textSize="@dimen/main_activity_top_button_text_font"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/materialButton9"
+            app:layout_constraintEnd_toStartOf="@+id/btn_sunday"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/materialButton8"
+            app:layout_constraintStart_toEndOf="@+id/btn_friday"
             app:layout_constraintTop_toTopOf="parent">
-
         </com.google.android.material.button.MaterialButton>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton10"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:id="@+id/btn_sunday"
+            android:layout_width="@dimen/main_activity_top_button_width"
+            android:layout_height="@dimen/main_activity_top_button_height"
             android:gravity="center"
             android:text="@string/_1"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/materialButton11"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/materialButton9"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </com.google.android.material.button.MaterialButton>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton11"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="@string/_1"
-            android:textSize="12sp"
+            android:textSize="@dimen/main_activity_top_button_text_font"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/materialButton10"
+            app:layout_constraintStart_toEndOf="@+id/btn_saturday"
             app:layout_constraintTop_toTopOf="parent">
 
         </com.google.android.material.button.MaterialButton>

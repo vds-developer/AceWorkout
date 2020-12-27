@@ -7,6 +7,7 @@ import vds.developer.aceworkout.db.entities.ExerciseEntity
 import vds.developer.aceworkout.db.entities.RepEntity
 import vds.developer.aceworkout.db.entities.SetEntity
 import vds.developer.aceworkout.db.entities.TrainingDayEntity
+import java.time.DayOfWeek
 import java.time.LocalDate
 
 //@RequiresApi(Build.VERSION_CODES.O)
@@ -27,8 +28,13 @@ class TrainingDayRepository(val app: Application) {
     }
 
     suspend fun getLast30DayTrainingDay(date: LocalDate): List<TrainingDayEntity> {
-        return trainingDayDao.getTrainingDayLast30Days(date.minusDays(30))
+        return trainingDayDao.getTrainingDayAfter(date.minusDays(30))
     }
+
+    suspend fun getWeekTrainingDays(date: LocalDate) : List<TrainingDayEntity> {
+        return trainingDayDao.getTrainingDayAfter(date.with(DayOfWeek.MONDAY))
+    }
+
 
     suspend fun getTrainingDay(date: LocalDate): TrainingDayEntity {
         return trainingDayDao.getTrainingDayByDate(date)
@@ -81,4 +87,6 @@ class TrainingDayRepository(val app: Application) {
     suspend fun addTrainingDay(trainingDay: TrainingDayEntity) : Long {
         return trainingDayDao.insertTrainingDaySync(trainingDay)
     }
+
+
 }
